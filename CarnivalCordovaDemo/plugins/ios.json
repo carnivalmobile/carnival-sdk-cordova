@@ -7,60 +7,21 @@
         "files": {
             "framework": {
                 "parents": {
-                    "CoreLocation.framework": [
-                        {
-                            "xml": "false",
-                            "count": 1
-                        }
-                    ],
-                    "CoreGraphics.framework": [
-                        {
-                            "xml": "false",
-                            "count": 1
-                        }
-                    ],
-                    "QuartzCore.framework": [
-                        {
-                            "xml": "false",
-                            "count": 1
-                        }
-                    ],
-                    "libz.dylib": [
-                        {
-                            "xml": "false",
-                            "count": 1
-                        }
-                    ],
-                    "MediaPlayer.framework": [
-                        {
-                            "xml": "false",
-                            "count": 1
-                        }
-                    ],
-                    "AVFoundation.framework": [
-                        {
-                            "xml": "false",
-                            "count": 1
-                        }
-                    ]
+                    "CoreLocation.framework": [],
+                    "CoreGraphics.framework": [],
+                    "QuartzCore.framework": [],
+                    "libz.dylib": [],
+                    "MediaPlayer.framework": [],
+                    "AVFoundation.framework": []
                 }
             },
             "config.xml": {
                 "parents": {
-                    "/*": [
-                        {
-                            "xml": "<feature name=\"CarnivalCordovaPlugin\"><param name=\"ios-package\" value=\"CarnivalCordovaPlugin\" /></feature>",
-                            "count": 1
-                        }
-                    ]
+                    "/*": []
                 }
             }
         }
     },
-    "installed_plugins": {
-        "com.carnival.carnivalcordovaplugin": {
-            "PACKAGE_NAME": "com.carnivalmobile.cordovademo"
-        }
-    },
+    "installed_plugins": {},
     "dependent_plugins": {}
 }
