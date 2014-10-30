@@ -9,7 +9,4 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
-    <platform name="ios">
-        <preference name="carnival_ios_app_key" value="d532cb136cb5d6154d9b2a07dc8bf19d1c53afbc" />
-    </platform>
 </widget>
