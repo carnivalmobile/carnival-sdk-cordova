@@ -1,7 +1,7 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
 module.exports = [
     {
-        "file": "plugins/com.carnival.carnivalcordovaplugin/CarnivalCordovaPlugin/iOS/carnivalcordovaplugin.js",
+        "file": "plugins/com.carnival.carnivalcordovaplugin/iOS/carnivalcordovaplugin.js",
         "id": "com.carnival.carnivalcordovaplugin.CarnivalCordovaPlugin",
         "clobbers": [
             "CarnivalCordovaPlugin"
