@@ -8,17 +8,30 @@
 
 #import "CarnivalCordovaPlugin.h"
 #import <Carnival/Carnival.h>
+#import <Cordova/CDVConfigParser.h>
 
 @interface CarnivalCordovaPlugin () <CarnivalMessageStreamDelegate>
+
+@property (strong, nonatomic) NSDictionary *settings;
 
 @end
 
 @implementation CarnivalCordovaPlugin
 
-#pragma mark - Initialize
+#pragma mark - overriden getters/setters
+
+- (NSDictionary *)settings {
+    if (!_settings) {
+        _settings = [self settingsFromConfigFile];
+    }
+    
+    return _settings;
+}
+
+#pragma mark - start engine
 
 - (void)startEngine:(CDVInvokedUrlCommand *)command {
-    NSString *appKey = [command argumentAtIndex:0];
+    NSString *appKey = self.settings[@"carnival_ios_app_key"];
     
     [self.commandDelegate runInBackground:^{
         [Carnival startEngine:appKey];
@@ -110,6 +123,31 @@
         
         [rootViewController presentViewController:streamNavigationController animated:YES completion:NULL];
     }
+}
+
+#pragma mark - helpers
+
+- (NSDictionary *)settingsFromConfigFile {
+    CDVConfigParser *parserDelegate = [[CDVConfigParser alloc] init];
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"config" ofType:@"xml"];
+    
+    if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        return nil;
+    }
+    
+    NSURL *url = [NSURL fileURLWithPath:path];
+    
+    NSXMLParser *configParser = [[NSXMLParser alloc] initWithContentsOfURL:url];
+    
+    if (configParser == nil) {
+        return nil;
+    }
+    
+    [configParser setDelegate:parserDelegate];
+    [configParser parse];
+    
+    return parserDelegate.settings;
 }
 
 @end

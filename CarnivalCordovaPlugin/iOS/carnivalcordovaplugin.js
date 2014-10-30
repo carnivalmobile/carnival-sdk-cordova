@@ -1,8 +1,8 @@
 function CarnivalCordovaPlugin() {}
 
 // Initialization
-CarnivalCordovaPlugin.prototype.startEngine = function(appKey) {
-    cordova.exec(null, null, "CarnivalCordovaPlugin", "startEngine", [appKey]);
+CarnivalCordovaPlugin.prototype.startEngine = function() {
+    cordova.exec(null, null, "CarnivalCordovaPlugin", "startEngine", []);
 };
 
 // Tags
