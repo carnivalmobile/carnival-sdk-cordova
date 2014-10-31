@@ -33,6 +33,14 @@
 
 	CarnivalCordovaPlugin.
 
+	Installation
+
+	iOS
+
+	1. Drag the Carnival.embeddedframework into your Xcode project.
+	2. Add a preference to your config.xml file with the following form:
+
+	<!-- <preference name="carnival_ios_app_key" value=<"YOUR_APP_KEY"> /> -->
 
 
 	</info>
