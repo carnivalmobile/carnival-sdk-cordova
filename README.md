@@ -23,8 +23,7 @@ e.g.
 ```js
 Carnival.startEngine();
 ```
-
-> Sets the Carnival appKey credentials for this app. This method uses the value of the `carnival_ios_app_key` in your config.xml file.
+Sets the Carnival appKey credentials for this app. This method uses the value of the `carnival_ios_app_key` in your config.xml file.
  
  ```js
 Carnival.getTags(
@@ -36,7 +35,7 @@ Carnival.getTags(
                   }
                 );
 ```
-> Asyncronously gets the tags for Carnival for this Device.
+Asyncronously gets the tags for Carnival for this Device.
 
 ```js
 Carnival.setTags(
@@ -49,7 +48,7 @@ Carnival.setTags(
                   ['EXAMPLE_SET_TAG_1', 'EXAMPLE_SET_TAG_2']
                 );
 ```
-> Asyncronously sets the tags for Carnival for this Device.
+Asyncronously sets the tags for Carnival for this Device.
 
 ```js
 Carnival.addTags(
@@ -62,9 +61,9 @@ Carnival.addTags(
                   ['EXAMPLE_ADDED_TAG']
                 );
 ```
-> Asyncronously adds the tag to Carnival for this Device.  If the tag is already registered with Carnival, this method does not add the tag again.
+Asyncronously adds the tag to Carnival for this Device.  If the tag is already registered with Carnival, this method does not add the tag again.
 
 ```js
 Carnival.showMessageStream();
 ```
-> Shows the Carnival Message Stream
+Shows the Carnival Message Stream
