@@ -7,8 +7,8 @@
 	<license>Please refer to our privacy policy and terms of service at http://carnivalmobile.com</license>
 	
 	<platform name="ios">
-		<js-module src="CarnivalCordovaPlugin/iOS/carnivalcordovaplugin.js" name="CarnivalCordovaPlugin">
-			<clobbers target="CarnivalCordovaPlugin" />
+		<js-module src="CarnivalCordovaPlugin/iOS/carnival.js" name="Carnival">
+			<clobbers target="Carnival" />
 		</js-module>	
 		
 		<config-file parent="/*" target="config.xml">

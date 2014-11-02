@@ -35,7 +35,7 @@ var app = {
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
         
-        CarnivalCordovaPlugin.startEngine();
+        Carnival.startEngine();
         
         var getTagsButton = document.getElementById('getTags');
         var setTagsButton = document.getElementById('setTags');
@@ -44,45 +44,45 @@ var app = {
         
         // getTags
         getTagsButton.addEventListener('click', function() {
-                                       CarnivalCordovaPlugin.getTags(
-                                                                     function callback(data) {
-                                                                     console.log('getTags returned: ' + data);
-                                                                     },
-                                                                     function errorHandler(err) {
-                                                                     console.log('getTags error: ' + err);
-                                                                     }
-                                                                     );
+                                       Carnival.getTags(
+                                                        function callback(data) {
+                                                            console.log('getTags returned: ' + data);
+                                                        },
+                                                        function errorHandler(err) {
+                                                            console.log('getTags error: ' + err);
+                                                        }
+                                                        );
                                        });
         
         // setTags
         setTagsButton.addEventListener('click', function() {
-                                       CarnivalCordovaPlugin.setTags(
-                                                                     function callback(data) {
-                                                                     console.log('setTags returned: ' + data);
-                                                                     },
-                                                                     function errorHandler(err) {
-                                                                     console.log('setTags error: ' + err);
-                                                                     },
-                                                                     ['EXAMPLE_SET_TAG_1', 'EXAMPLE_SET_TAG_2']
-                                                                     );
+                                       Carnival.setTags(
+                                                        function callback(data) {
+                                                            console.log('setTags returned: ' + data);
+                                                        },
+                                                        function errorHandler(err) {
+                                                            console.log('setTags error: ' + err);
+                                                        },
+                                                        ['EXAMPLE_SET_TAG_1', 'EXAMPLE_SET_TAG_2']
+                                                        );
                                        });
         
         // addTags
         addTagsButton.addEventListener('click', function() {
-                                       CarnivalCordovaPlugin.addTags(
-                                                                     function callback(data) {
-                                                                     console.log('addTags returned: ' + data);
-                                                                     },
-                                                                     function errorHandler(err) {
-                                                                     console.log('addTags error: ' + err);
-                                                                     },
-                                                                     ['EXAMPLE_ADDED_TAG']
-                                                                     );
+                                       Carnival.addTags(
+                                                        function callback(data) {
+                                                            console.log('addTags returned: ' + data);
+                                                        },
+                                                        function errorHandler(err) {
+                                                            console.log('addTags error: ' + err);
+                                                        },
+                                                        ['EXAMPLE_ADDED_TAG']
+                                                        );
                                        });
         
         // showStream
         showStreamButton.addEventListener('click', function() {
-                                          CarnivalCordovaPlugin.showMessageStream();
+                                          Carnival.showMessageStream();
                                           });
     },
     // Update DOM on a Received Event

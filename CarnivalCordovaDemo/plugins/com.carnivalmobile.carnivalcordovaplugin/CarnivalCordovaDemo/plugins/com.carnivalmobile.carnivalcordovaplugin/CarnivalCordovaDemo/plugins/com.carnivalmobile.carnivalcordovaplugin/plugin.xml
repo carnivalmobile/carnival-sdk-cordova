@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="com.carnivalmobile.carnivalcordovaplugin" version="1.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+	<engines>
+		<engine name="cordova" version=">=3.4.0"/>
+	</engines>
+	<name>CarnivalCordovaPlugin</name>
+	<license>Please refer to our privacy policy and terms of service at http://carnivalmobile.com</license>
+	
+	<platform name="ios">
+		<js-module src="iOS/carnivalcordovaplugin.js" name="CarnivalCordovaPlugin">
+			<clobbers target="CarnivalCordovaPlugin" />
+		</js-module>	
+		
+		<config-file parent="/*" target="config.xml">
+			<feature name="CarnivalCordovaPlugin">
+				<param name="ios-package" value="CarnivalCordovaPlugin"/>
+			</feature>
+		</config-file>
+
+		<preference name="carnival_ios_app_key" />
+
+		<header-file src="iOS/CarnivalCordovaPlugin.h"/>
+		<source-file src="iOS/CarnivalCordovaPlugin.m"/>
+
+		<framework src="CoreLocation.framework" />
+		<framework src="CoreGraphics.framework" />
+		<framework src="QuartzCore.framework" />
+		<framework src="libz.dylib" />
+		<framework src="MediaPlayer.framework" />
+		<framework src="AVFoundation.framework" />
+	</platform>
+	<info>
+
+	CarnivalCordovaPlugin.
+
+	Installation
+
+	iOS
+
+	1. Drag the Carnival.embeddedframework into your Xcode project.
+	2. Add a preference to your config.xml file for the 'carnival_ios_app_key' with your Carnival iOS App key
+
+	</info>
+</plugin>
