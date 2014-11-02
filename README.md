@@ -8,7 +8,7 @@ This repo contains cordova plugins for both iOS and Android as well as a demo ap
 
 ### iOS
 
-Add a preference to your config.xml file with your Carnival App key (from [http://app.carnivalmobile.com](http://app.carnivalmobile.com)).
+Add a preference to your `config.xml` file with your Carnival App key (from [http://app.carnivalmobile.com](http://app.carnivalmobile.com)).
 
 e.g.
 
@@ -17,6 +17,8 @@ e.g.
     <preference name="carnival_ios_app_key" value="YOUR_APP_KEY_GOES_HERE" />
 </platform>
 ```
+
+Open your Xcode project, which should be located in the `platforms/ios` directory of your Cordova/Phonegap project and Drag and drop the `Carnival.embeddedframework` into it. The `Carnival.embeddedframework` can be downloaded from the [Carnival iOS SDK repo](https://github.com/carnivalmobile/carnival-ios-sdk/releases).
 
 ### Methods
 
