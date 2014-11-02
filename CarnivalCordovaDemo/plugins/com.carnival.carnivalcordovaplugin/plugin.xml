@@ -7,7 +7,7 @@
 	<license>Please refer to our privacy policy and terms of service at http://carnivalmobile.com</license>
 	
 	<platform name="ios">
-		<js-module src="CarnivalCordovaPlugin/iOS/carnivalcordovaplugin.js" name="CarnivalCordovaPlugin">
+		<js-module src="iOS/carnivalcordovaplugin.js" name="CarnivalCordovaPlugin">
 			<clobbers target="CarnivalCordovaPlugin" />
 		</js-module>	
 		
@@ -17,8 +17,10 @@
 			</feature>
 		</config-file>
 
-		<header-file src="CarnivalCordovaPlugin/iOS/CarnivalCordovaPlugin.h"/>
-		<source-file src="CarnivalCordovaPlugin/iOS/CarnivalCordovaPlugin.m"/>
+		<preference name="carnival_ios_app_key" />
+
+		<header-file src="iOS/CarnivalCordovaPlugin.h"/>
+		<source-file src="iOS/CarnivalCordovaPlugin.m"/>
 
 		<framework src="CoreLocation.framework" />
 		<framework src="CoreGraphics.framework" />
@@ -29,7 +31,14 @@
 	</platform>
 	<info>
 
-	CarnivalCordovaPlugin info.
+	CarnivalCordovaPlugin.
+
+	Installation
+
+	iOS
+
+	1. Drag the Carnival.embeddedframework into your Xcode project.
+	2. Add a preference to your config.xml file for the 'carnival_ios_app_key' with your Carnival iOS App key
 
 	</info>
 </plugin>

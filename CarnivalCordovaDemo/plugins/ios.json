@@ -59,6 +59,7 @@
     },
     "installed_plugins": {
         "com.carnival.carnivalcordovaplugin": {
+            "CARNIVAL_IOS_APP_KEY": "derp",
             "PACKAGE_NAME": "com.carnivalmobile.cordovademo"
         }
     },

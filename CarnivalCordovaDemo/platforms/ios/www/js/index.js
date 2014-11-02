@@ -35,7 +35,7 @@ var app = {
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
         
-        CarnivalCordovaPlugin.startEngine('d532cb136cb5d6154d9b2a07dc8bf19d1c53afbc');
+        CarnivalCordovaPlugin.startEngine();
         
         var getTagsButton = document.getElementById('getTags');
         var setTagsButton = document.getElementById('setTags');

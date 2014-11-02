@@ -25,15 +25,12 @@
 		308D05391370CCF300D202BF /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 308D05301370CCF300D202BF /* icon@2x.png */; };
 		30A0434814DC770100060A13 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 30A0434314DC770100060A13 /* Localizable.strings */; };
 		30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30FC414816E50CA1004E6F35 /* icon-72@2x.png */; };
+		3248B0BA982741D196AC42C3 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA8E031AF4314E01B12DD591 /* CoreLocation.framework */; };
+		3B33906B374A420B874E59EE /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DE5AFAF7CFD401DB4C5E150 /* AVFoundation.framework */; };
 		5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */; };
 		751A92571A01DE7D00A65170 /* Carnival.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 751A92541A01DE7D00A65170 /* Carnival.framework */; };
 		751A92581A01DE7D00A65170 /* CarnivalResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 751A92561A01DE7D00A65170 /* CarnivalResources.bundle */; };
-		7541D1501A02FA5900F91544 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B64A8C0FDD35482FB84DAFC0 /* CoreLocation.framework */; };
-		7541D1511A02FA5900F91544 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6761ECFD2B04516AE8F1E46 /* QuartzCore.framework */; };
-		7541D1521A02FA5900F91544 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B5E915DB90742F18245D4F1 /* libz.dylib */; };
-		7541D1531A02FA5900F91544 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04B0EF1FD1F9401B90F27E5E /* MediaPlayer.framework */; };
-		7541D1541A02FA5900F91544 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 355F5E3418B7401D85E0627D /* AVFoundation.framework */; };
-		7541D1551A02FA5E00F91544 /* CarnivalCordovaPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E599070B80B42EC92825424 /* CarnivalCordovaPlugin.m */; };
+		753B10E91A06C5260058CED1 /* CarnivalCordovaPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E599070B80B42EC92825424 /* CarnivalCordovaPlugin.m */; };
 		7E7966DE1810823500FA85AD /* icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D41810823500FA85AD /* icon-40.png */; };
 		7E7966DF1810823500FA85AD /* icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D51810823500FA85AD /* icon-40@2x.png */; };
 		7E7966E01810823500FA85AD /* icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D61810823500FA85AD /* icon-50.png */; };
@@ -44,7 +41,10 @@
 		7E7966E51810823500FA85AD /* icon-76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966DB1810823500FA85AD /* icon-76@2x.png */; };
 		7E7966E61810823500FA85AD /* icon-small.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966DC1810823500FA85AD /* icon-small.png */; };
 		7E7966E71810823500FA85AD /* icon-small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966DD1810823500FA85AD /* icon-small@2x.png */; };
+		800ADE41320C40CB9E76369A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1882AC3B1F074037A7D8D16A /* QuartzCore.framework */; };
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
+		D9E549D25DF344E78B939848 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B9A9F68A03649BAA9ED0803 /* MediaPlayer.framework */; };
+		DB8460DCCDE34843BE7DA7A4 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B631CF5C4F8D42B2B8F66EBB /* libz.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,7 +65,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		04B0EF1FD1F9401B90F27E5E /* MediaPlayer.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		1882AC3B1F074037A7D8D16A /* QuartzCore.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* CarnivalCordovaDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarnivalCordovaDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -73,7 +73,6 @@
 		1F766FE013BBADB100FB74C0 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = Localizable.strings; sourceTree = "<group>"; };
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		2B5E915DB90742F18245D4F1 /* libz.dylib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CordovaLib.xcodeproj; path = CordovaLib/CordovaLib.xcodeproj; sourceTree = "<group>"; };
 		301BF56E109A69640062928A /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = SOURCE_ROOT; };
 		302D95EE14D2391D003F00A1 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
@@ -93,7 +92,7 @@
 		30A0434714DC770100060A13 /* se */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = se; path = Localizable.strings; sourceTree = "<group>"; };
 		30FC414816E50CA1004E6F35 /* icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-72@2x.png"; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* CarnivalCordovaDemo-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CarnivalCordovaDemo-Prefix.pch"; sourceTree = "<group>"; };
-		355F5E3418B7401D85E0627D /* AVFoundation.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		4DE5AFAF7CFD401DB4C5E150 /* AVFoundation.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		751A92541A01DE7D00A65170 /* Carnival.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Carnival.framework; sourceTree = "<group>"; };
 		751A92561A01DE7D00A65170 /* CarnivalResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = CarnivalResources.bundle; sourceTree = "<group>"; };
@@ -107,11 +106,12 @@
 		7E7966DB1810823500FA85AD /* icon-76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-76@2x.png"; sourceTree = "<group>"; };
 		7E7966DC1810823500FA85AD /* icon-small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-small.png"; sourceTree = "<group>"; };
 		7E7966DD1810823500FA85AD /* icon-small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-small@2x.png"; sourceTree = "<group>"; };
+		8B9A9F68A03649BAA9ED0803 /* MediaPlayer.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* CarnivalCordovaDemo-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "CarnivalCordovaDemo-Info.plist"; path = "../CarnivalCordovaDemo-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		8E599070B80B42EC92825424 /* CarnivalCordovaPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CarnivalCordovaPlugin.m; path = com.carnival.carnivalcordovaplugin/CarnivalCordovaPlugin.m; sourceTree = "<group>"; };
-		B64A8C0FDD35482FB84DAFC0 /* CoreLocation.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		B631CF5C4F8D42B2B8F66EBB /* libz.dylib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x~iphone.png"; sourceTree = "<group>"; };
-		E6761ECFD2B04516AE8F1E46 /* QuartzCore.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		EA8E031AF4314E01B12DD591 /* CoreLocation.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		EB87FDF21871DA7A0020F90C /* merges */ = {isa = PBXFileReference; lastKnownFileType = folder; name = merges; path = ../../merges; sourceTree = "<group>"; };
 		EB87FDF31871DA8E0020F90C /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; name = www; path = ../../www; sourceTree = "<group>"; };
 		EB87FDF41871DAF40020F90C /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = ../../config.xml; sourceTree = "<group>"; };
@@ -129,11 +129,11 @@
 				301BF552109A68D80062928A /* libCordova.a in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
 				305D5FD1115AB8F900A74A75 /* MobileCoreServices.framework in Frameworks */,
-				7541D1501A02FA5900F91544 /* CoreLocation.framework in Frameworks */,
-				7541D1511A02FA5900F91544 /* QuartzCore.framework in Frameworks */,
-				7541D1521A02FA5900F91544 /* libz.dylib in Frameworks */,
-				7541D1531A02FA5900F91544 /* MediaPlayer.framework in Frameworks */,
-				7541D1541A02FA5900F91544 /* AVFoundation.framework in Frameworks */,
+				3248B0BA982741D196AC42C3 /* CoreLocation.framework in Frameworks */,
+				800ADE41320C40CB9E76369A /* QuartzCore.framework in Frameworks */,
+				DB8460DCCDE34843BE7DA7A4 /* libz.dylib in Frameworks */,
+				D9E549D25DF344E78B939848 /* MediaPlayer.framework in Frameworks */,
+				3B33906B374A420B874E59EE /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,11 +227,11 @@
 				5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */,
 				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
 				305D5FD0115AB8F900A74A75 /* MobileCoreServices.framework */,
-				B64A8C0FDD35482FB84DAFC0 /* CoreLocation.framework */,
-				E6761ECFD2B04516AE8F1E46 /* QuartzCore.framework */,
-				2B5E915DB90742F18245D4F1 /* libz.dylib */,
-				04B0EF1FD1F9401B90F27E5E /* MediaPlayer.framework */,
-				355F5E3418B7401D85E0627D /* AVFoundation.framework */,
+				EA8E031AF4314E01B12DD591 /* CoreLocation.framework */,
+				1882AC3B1F074037A7D8D16A /* QuartzCore.framework */,
+				B631CF5C4F8D42B2B8F66EBB /* libz.dylib */,
+				8B9A9F68A03649BAA9ED0803 /* MediaPlayer.framework */,
+				4DE5AFAF7CFD401DB4C5E150 /* AVFoundation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -458,7 +458,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7541D1551A02FA5E00F91544 /* CarnivalCordovaPlugin.m in Sources */,
+				753B10E91A06C5260058CED1 /* CarnivalCordovaPlugin.m in Sources */,
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
