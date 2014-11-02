@@ -7,7 +7,7 @@
 	<license>Please refer to our privacy policy and terms of service at http://carnivalmobile.com</license>
 	
 	<platform name="ios">
-		<js-module src="CarnivalCordovaPlugin/iOS/carnivalcordovaplugin.js" name="CarnivalCordovaPlugin">
+		<js-module src="iOS/carnivalcordovaplugin.js" name="CarnivalCordovaPlugin">
 			<clobbers target="CarnivalCordovaPlugin" />
 		</js-module>	
 		
@@ -19,8 +19,8 @@
 
 		<preference name="carnival_ios_app_key" />
 
-		<header-file src="CarnivalCordovaPlugin/iOS/CarnivalCordovaPlugin.h"/>
-		<source-file src="CarnivalCordovaPlugin/iOS/CarnivalCordovaPlugin.m"/>
+		<header-file src="iOS/CarnivalCordovaPlugin.h"/>
+		<source-file src="iOS/CarnivalCordovaPlugin.m"/>
 
 		<framework src="CoreLocation.framework" />
 		<framework src="CoreGraphics.framework" />
