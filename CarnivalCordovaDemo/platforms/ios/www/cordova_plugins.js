@@ -1,8 +1,8 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
 module.exports = [
     {
-        "file": "plugins/com.carnival.carnivalcordovaplugin/iOS/carnivalcordovaplugin.js",
-        "id": "com.carnival.carnivalcordovaplugin.CarnivalCordovaPlugin",
+        "file": "plugins/com.carnivalmobile.carnivalcordovaplugin/iOS/carnivalcordovaplugin.js",
+        "id": "com.carnivalmobile.carnivalcordovaplugin.CarnivalCordovaPlugin",
         "clobbers": [
             "CarnivalCordovaPlugin"
         ]
@@ -11,7 +11,7 @@ module.exports = [
 module.exports.metadata = 
 // TOP OF METADATA
 {
-    "com.carnival.carnivalcordovaplugin": "1.0"
+    "com.carnivalmobile.carnivalcordovaplugin": "1.0"
 }
 // BOTTOM OF METADATA
 });

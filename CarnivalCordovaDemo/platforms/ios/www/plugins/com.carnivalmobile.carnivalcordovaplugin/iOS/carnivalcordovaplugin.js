@@ -1,4 +1,4 @@
-cordova.define("com.carnival.carnivalcordovaplugin.CarnivalCordovaPlugin", function(require, exports, module) { function CarnivalCordovaPlugin() {}
+cordova.define("com.carnivalmobile.carnivalcordovaplugin.CarnivalCordovaPlugin", function(require, exports, module) { function CarnivalCordovaPlugin() {}
 
 // Initialization
 CarnivalCordovaPlugin.prototype.startEngine = function() {

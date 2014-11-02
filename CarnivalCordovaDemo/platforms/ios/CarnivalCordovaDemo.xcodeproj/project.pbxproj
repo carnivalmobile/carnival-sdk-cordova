@@ -25,12 +25,9 @@
 		308D05391370CCF300D202BF /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 308D05301370CCF300D202BF /* icon@2x.png */; };
 		30A0434814DC770100060A13 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 30A0434314DC770100060A13 /* Localizable.strings */; };
 		30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30FC414816E50CA1004E6F35 /* icon-72@2x.png */; };
-		3248B0BA982741D196AC42C3 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA8E031AF4314E01B12DD591 /* CoreLocation.framework */; };
-		3B33906B374A420B874E59EE /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DE5AFAF7CFD401DB4C5E150 /* AVFoundation.framework */; };
 		5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */; };
 		751A92571A01DE7D00A65170 /* Carnival.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 751A92541A01DE7D00A65170 /* Carnival.framework */; };
 		751A92581A01DE7D00A65170 /* CarnivalResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 751A92561A01DE7D00A65170 /* CarnivalResources.bundle */; };
-		753B10E91A06C5260058CED1 /* CarnivalCordovaPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E599070B80B42EC92825424 /* CarnivalCordovaPlugin.m */; };
 		7E7966DE1810823500FA85AD /* icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D41810823500FA85AD /* icon-40.png */; };
 		7E7966DF1810823500FA85AD /* icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D51810823500FA85AD /* icon-40@2x.png */; };
 		7E7966E01810823500FA85AD /* icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D61810823500FA85AD /* icon-50.png */; };
@@ -41,10 +38,13 @@
 		7E7966E51810823500FA85AD /* icon-76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966DB1810823500FA85AD /* icon-76@2x.png */; };
 		7E7966E61810823500FA85AD /* icon-small.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966DC1810823500FA85AD /* icon-small.png */; };
 		7E7966E71810823500FA85AD /* icon-small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966DD1810823500FA85AD /* icon-small@2x.png */; };
-		800ADE41320C40CB9E76369A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1882AC3B1F074037A7D8D16A /* QuartzCore.framework */; };
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
-		D9E549D25DF344E78B939848 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B9A9F68A03649BAA9ED0803 /* MediaPlayer.framework */; };
-		DB8460DCCDE34843BE7DA7A4 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B631CF5C4F8D42B2B8F66EBB /* libz.dylib */; };
+		51F5D0D5D9684A95B55099CE /* CarnivalCordovaPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 23A225907A2946EBA9DB8048 /* CarnivalCordovaPlugin.m */; };
+		941737ACD6FB4BE2852C2CB2 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFE0B357456044A5B014E7E9 /* CoreLocation.framework */; };
+		66DA18B6123D42AF9EC02EE2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9D47BC50EB2447BA8C98895 /* QuartzCore.framework */; };
+		D3176622F2B34434A29863E1 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 10A48881969F4559BDE56DFB /* libz.dylib */; };
+		47C7B59A0A7A4B838D99C192 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0EC9ECD753B423EB3EF8D48 /* MediaPlayer.framework */; };
+		10F0DAFD82F348179B1268AB /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B20A312FB3D04A1397853940 /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,7 +65,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1882AC3B1F074037A7D8D16A /* QuartzCore.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* CarnivalCordovaDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarnivalCordovaDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -92,7 +91,6 @@
 		30A0434714DC770100060A13 /* se */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = se; path = Localizable.strings; sourceTree = "<group>"; };
 		30FC414816E50CA1004E6F35 /* icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-72@2x.png"; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* CarnivalCordovaDemo-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CarnivalCordovaDemo-Prefix.pch"; sourceTree = "<group>"; };
-		4DE5AFAF7CFD401DB4C5E150 /* AVFoundation.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		751A92541A01DE7D00A65170 /* Carnival.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Carnival.framework; sourceTree = "<group>"; };
 		751A92561A01DE7D00A65170 /* CarnivalResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = CarnivalResources.bundle; sourceTree = "<group>"; };
@@ -106,17 +104,21 @@
 		7E7966DB1810823500FA85AD /* icon-76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-76@2x.png"; sourceTree = "<group>"; };
 		7E7966DC1810823500FA85AD /* icon-small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-small.png"; sourceTree = "<group>"; };
 		7E7966DD1810823500FA85AD /* icon-small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-small@2x.png"; sourceTree = "<group>"; };
-		8B9A9F68A03649BAA9ED0803 /* MediaPlayer.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* CarnivalCordovaDemo-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "CarnivalCordovaDemo-Info.plist"; path = "../CarnivalCordovaDemo-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		8E599070B80B42EC92825424 /* CarnivalCordovaPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CarnivalCordovaPlugin.m; path = com.carnival.carnivalcordovaplugin/CarnivalCordovaPlugin.m; sourceTree = "<group>"; };
-		B631CF5C4F8D42B2B8F66EBB /* libz.dylib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x~iphone.png"; sourceTree = "<group>"; };
-		EA8E031AF4314E01B12DD591 /* CoreLocation.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		EB87FDF21871DA7A0020F90C /* merges */ = {isa = PBXFileReference; lastKnownFileType = folder; name = merges; path = ../../merges; sourceTree = "<group>"; };
 		EB87FDF31871DA8E0020F90C /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; name = www; path = ../../www; sourceTree = "<group>"; };
 		EB87FDF41871DAF40020F90C /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = ../../config.xml; sourceTree = "<group>"; };
 		EFEA0FA820384D19932F1177 /* CarnivalCordovaPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CarnivalCordovaPlugin.h; path = com.carnival.carnivalcordovaplugin/CarnivalCordovaPlugin.h; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = CarnivalCordovaDemo/config.xml; sourceTree = "<group>"; };
+		23A225907A2946EBA9DB8048 /* CarnivalCordovaPlugin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CarnivalCordovaPlugin.m"; path = "com.carnivalmobile.carnivalcordovaplugin/CarnivalCordovaPlugin.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		D15B6324A97E49448C49DA66 /* CarnivalCordovaPlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CarnivalCordovaPlugin.h"; path = "com.carnivalmobile.carnivalcordovaplugin/CarnivalCordovaPlugin.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		DFE0B357456044A5B014E7E9 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "CoreLocation.framework"; path = "System/Library/Frameworks/CoreLocation.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
+		A9D47BC50EB2447BA8C98895 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "QuartzCore.framework"; path = "System/Library/Frameworks/QuartzCore.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
+		10A48881969F4559BDE56DFB /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libz.dylib"; path = "usr/lib/libz.dylib"; sourceTree = SDKROOT; fileEncoding = 4; };
+		E0EC9ECD753B423EB3EF8D48 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "MediaPlayer.framework"; path = "System/Library/Frameworks/MediaPlayer.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
+		B20A312FB3D04A1397853940 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "AVFoundation.framework"; path = "System/Library/Frameworks/AVFoundation.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,11 +131,11 @@
 				301BF552109A68D80062928A /* libCordova.a in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
 				305D5FD1115AB8F900A74A75 /* MobileCoreServices.framework in Frameworks */,
-				3248B0BA982741D196AC42C3 /* CoreLocation.framework in Frameworks */,
-				800ADE41320C40CB9E76369A /* QuartzCore.framework in Frameworks */,
-				DB8460DCCDE34843BE7DA7A4 /* libz.dylib in Frameworks */,
-				D9E549D25DF344E78B939848 /* MediaPlayer.framework in Frameworks */,
-				3B33906B374A420B874E59EE /* AVFoundation.framework in Frameworks */,
+				941737ACD6FB4BE2852C2CB2 /* CoreLocation.framework in Frameworks */,
+				66DA18B6123D42AF9EC02EE2 /* QuartzCore.framework in Frameworks */,
+				D3176622F2B34434A29863E1 /* libz.dylib in Frameworks */,
+				47C7B59A0A7A4B838D99C192 /* MediaPlayer.framework in Frameworks */,
+				10F0DAFD82F348179B1268AB /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,11 +229,11 @@
 				5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */,
 				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
 				305D5FD0115AB8F900A74A75 /* MobileCoreServices.framework */,
-				EA8E031AF4314E01B12DD591 /* CoreLocation.framework */,
-				1882AC3B1F074037A7D8D16A /* QuartzCore.framework */,
-				B631CF5C4F8D42B2B8F66EBB /* libz.dylib */,
-				8B9A9F68A03649BAA9ED0803 /* MediaPlayer.framework */,
-				4DE5AFAF7CFD401DB4C5E150 /* AVFoundation.framework */,
+				DFE0B357456044A5B014E7E9 /* CoreLocation.framework */,
+				A9D47BC50EB2447BA8C98895 /* QuartzCore.framework */,
+				10A48881969F4559BDE56DFB /* libz.dylib */,
+				E0EC9ECD753B423EB3EF8D48 /* MediaPlayer.framework */,
+				B20A312FB3D04A1397853940 /* AVFoundation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -249,6 +251,8 @@
 			children = (
 				8E599070B80B42EC92825424 /* CarnivalCordovaPlugin.m */,
 				EFEA0FA820384D19932F1177 /* CarnivalCordovaPlugin.h */,
+				23A225907A2946EBA9DB8048 /* CarnivalCordovaPlugin.m */,
+				D15B6324A97E49448C49DA66 /* CarnivalCordovaPlugin.h */,
 			);
 			name = Plugins;
 			path = CarnivalCordovaDemo/Plugins;
@@ -458,10 +462,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				753B10E91A06C5260058CED1 /* CarnivalCordovaPlugin.m in Sources */,
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
+				51F5D0D5D9684A95B55099CE /* CarnivalCordovaPlugin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
