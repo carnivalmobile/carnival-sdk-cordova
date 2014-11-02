@@ -17,8 +17,6 @@
 			</feature>
 		</config-file>
 
-		<preference name="carnival_ios_app_key" />
-
 		<header-file src="CarnivalCordovaPlugin/iOS/CarnivalCordovaPlugin.h"/>
 		<source-file src="CarnivalCordovaPlugin/iOS/CarnivalCordovaPlugin.m"/>
 
