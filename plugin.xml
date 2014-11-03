@@ -19,6 +19,7 @@
 
 		<header-file src="CarnivalCordovaPlugin/iOS/CarnivalCordovaPlugin.h"/>
 		<source-file src="CarnivalCordovaPlugin/iOS/CarnivalCordovaPlugin.m"/>
+		<source-file src="CarnivalCordovaPlugin/iOS/Carnival.embeddedframework"/>
 
 		<framework src="CoreLocation.framework" />
 		<framework src="CoreGraphics.framework" />
@@ -26,6 +27,7 @@
 		<framework src="libz.dylib" />
 		<framework src="MediaPlayer.framework" />
 		<framework src="AVFoundation.framework" />
+		<framework src="CarnivalCordovaPlugin/iOS/Carnival.embeddedframework/Carnival.framework" />
 	</platform>
 	<info>
 
