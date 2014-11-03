@@ -16,7 +16,6 @@
 // Tags
 - (void)getTags:(CDVInvokedUrlCommand *)command;
 - (void)setTags:(CDVInvokedUrlCommand *)command;
-- (void)addTags:(CDVInvokedUrlCommand *)command;
 
 // Stream
 - (void)showMessageStream:(CDVInvokedUrlCommand *)command;

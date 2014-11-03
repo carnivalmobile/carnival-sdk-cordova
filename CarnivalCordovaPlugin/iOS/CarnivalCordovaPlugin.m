@@ -80,25 +80,6 @@
     }];
 }
 
-- (void)addTags:(CDVInvokedUrlCommand *)command {
-    NSArray *tagsToAdd = command.arguments;
-    
-    [self.commandDelegate runInBackground:^{
-        [Carnival addTags:tagsToAdd inBackgroundWithResponse:^(NSArray *tags, NSError *error) {
-            if (error) {
-                CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
-                
-                [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
-            }
-            else {
-                CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:tags];
-                
-                [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
-            }
-        }];
-    }];
-}
-
 #pragma mark - stream
 
 - (void)showMessageStream:(CDVInvokedUrlCommand *)command {

@@ -52,18 +52,6 @@ Carnival.setTags(
 ```
 Asyncronously sets the tags for Carnival for this Device.
 
-```js
-Carnival.addTags(
-                  function callback(data) {
-                    console.log('addTags returned: ' + data);
-                  },
-                  function errorHandler(err) {
-                    console.log('addTags error: ' + err);
-                  },
-                  ['EXAMPLE_ADDED_TAG']
-                );
-```
-Asyncronously adds the tag to Carnival for this Device.  If the tag is already registered with Carnival, this method does not add the tag again.
 
 ```js
 Carnival.showMessageStream();
