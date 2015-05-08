@@ -16,17 +16,19 @@ import android.content.Intent;
 import android.content.res.XmlResourceParser;
 import android.text.TextUtils;
 import android.util.Log;
+import android.location.Location;
 
 import com.carnival.sdk.Carnival;
 import com.carnival.sdk.Carnival.TagsHandler;
 import com.carnival.sdk.CarnivalStreamActivity;
 
-public class CarnivalPlugin extends CordovaPlugin {
+public class CarnivalCordovaPlugin extends CordovaPlugin {
 
 	private static final String ACTION_START_ENGINE = "startEngine";
 	private static final String ACTION_GET_TAGS = "getTags";
 	private static final String ACTION_SET_TAGS = "setTags";
 	private static final String ACTION_SHOW_MESSAGE_STREAM = "showMessageStream";
+	private static final String ACTION_UPDATE_LOCATION = "updateLocation";
 	
 
 	@Override
@@ -49,10 +51,10 @@ public class CarnivalPlugin extends CordovaPlugin {
 			});
 		} else if (ACTION_SET_TAGS.equals(action)) {
 				setTags(args);	
-			
 		} else if (ACTION_SHOW_MESSAGE_STREAM.equals(action)) {
 			showMessageStream();
-			
+		} else if (ACTION_UPDATE_LOCATION.equals(action)) {
+			updateLocation(args.getJSONArray(0));
 		} else {
 			return false;
 		}
@@ -134,11 +136,22 @@ public class CarnivalPlugin extends CordovaPlugin {
 
 		this.cordova.getThreadPool().execute (new Runnable() {
 			public void run() {
-				Activity activity = CarnivalPlugin.this.cordova.getActivity();
+				Activity activity = CarnivalCordovaPlugin.this.cordova.getActivity();
 				Intent i = new Intent(activity, CarnivalStreamActivity.class);
 				activity.startActivity(i);
 			}
 		});
+	}
+
+	private void updateLocation(JSONArray args) throws JSONException {
+		double lat = args.getDouble(0);
+		double lon = args.getDouble(1);
+
+		Location location = new Location("Carnival Cordova");
+		location.setLatitude(lat);
+		location.setLongitude(lon);
+
+		Carnival.updateLocation(location);
 	}
 
 }

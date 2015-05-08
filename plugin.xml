@@ -7,31 +7,29 @@
 	<license>Please refer to our privacy policy and terms of service at http://carnivalmobile.com</license>
 
 	<platform name="android">
-		<dependency id="com.google.playservices" />
-		<dependency id="android.support.v4" />
 
-		<framework src="CarnivalCordovaPlugin/android/libs/Carnival-Eclipse" custom="true" />
+		<framework src="CarnivalCordovaPlugin/android/carnival.gradle" custom="true" type="gradleReference" />
 
 		<js-module src="CarnivalCordovaPlugin/android/carnival.js" name="Carnival">
 			<clobbers target="Carnival" />
 		</js-module>
 
-		<source-file src="CarnivalCordovaPlugin/android/CarnivalPlugin.java" target-dir="src/com/carnivalmobile/carnivalcordovaplugin" />
+		<source-file src="CarnivalCordovaPlugin/android/CarnivalCordovaPlugin.java" target-dir="src/com/carnivalmobile/carnivalcordovaplugin" />
 
 		<config-file target="res/xml/config.xml" parent="/widget">
-			<feature name="CarnivalPlugin">
-				<param name="android-package" value="com.carnivalmobile.carnivalcordovaplugin.CarnivalPlugin"/>
+			<feature name="CarnivalCordovaPlugin">
+				<param name="android-package" value="com.carnivalmobile.carnivalcordovaplugin.CarnivalCordovaPlugin"/>
 			</feature>
 		</config-file>
 
 		<config-file target="AndroidManifest.xml" parent="/manifest">
+			<uses-permission android:name="android.permission.WAKE_LOCK" />
 			<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-			<uses-permission android:name="com.carnival.permission.C2D_MESSAGE" />
+			<uses-permission android:name="${applicationId}.permission.C2D_MESSAGE" />
 			<permission
-                android:name="com.carnival.permission.C2D_MESSAGE"
+                android:name="${applicationId}.permission.C2D_MESSAGE"
                 android:protectionLevel="signature" />
 		</config-file>
-
 		<config-file target="AndroidManifest.xml" parent="/manifest/application">
     		<activity android:name="com.carnival.sdk.CarnivalStreamActivity" />
 	        <activity android:name="com.carnival.sdk.MessageActivity" />
@@ -43,7 +41,7 @@
 	                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 	                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
 
-	                <category android:name="com.carnival" />
+	                <category android:name="${applicationId}" />
 	            </intent-filter>
 	        </receiver>
 
@@ -56,10 +54,9 @@
 	            android:configChanges="orientation|keyboardHidden|screenSize">
 
 	        </activity>
+	        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+	        
 		</config-file>
-
-
-
 
 	</platform>
 

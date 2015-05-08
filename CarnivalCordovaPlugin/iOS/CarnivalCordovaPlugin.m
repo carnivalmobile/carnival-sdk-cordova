@@ -92,6 +92,16 @@
     }];
 }
 
+#pragma mark - stream
+- (void)updateLocation:(CDVInvokedUrlCommand *)command {
+    double lat = [command.arguments[0] doubleValue];
+    double lon = [command.arguments[1] doubleValue];
+    [self.commandDelegate runInBackground:^{
+        CLLocation *location = [[CLLocation alloc] initWithLatitude:lat longitude:lon];
+        [Carnival updateLocation:location];
+    }];
+}
+
 #pragma mark - CarnivalMessageStreamDelegae
 
 - (void)carnivalMessageStreamNeedsDisplay:(UINavigationController *)streamNavigationController fromApplicationState:(UIApplicationState)applicationState {

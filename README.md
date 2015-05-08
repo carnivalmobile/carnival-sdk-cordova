@@ -33,9 +33,7 @@ e.g.
 </platform>
 ```
 
-In order to build and run the App, import `platforms/android` into Eclipse by going to **File->Import** and then selecting **Android->Existing Android Code Into Workspace**. Find your app in `platforms/android` and import all the components of your project. Once the project has finished building, you can run it by right clicking on your primary project folder and then choosing **Run As->Android Application**.
 
-Due to an issue with the way Ant builds the project, when you run the app with `cordova run android`, Ant fails to correctly build and include the resources defined in and required by the Carnival SDK.
 
 ### Methods
 
@@ -74,3 +72,8 @@ Asyncronously sets the tags for Carnival for this Device.
 Carnival.showMessageStream();
 ```
 Shows the Carnival Message Stream
+
+```js
+Carnival.updateLocation([-41.292322, 174.777888]);
+```
+Sends a location update to Carnival.

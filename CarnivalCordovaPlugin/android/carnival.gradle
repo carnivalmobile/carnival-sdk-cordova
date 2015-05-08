@@ -1,0 +1,9 @@
+repositories {
+    maven {
+        url "https://github.com/carnivalmobile/maven-repository/raw/master/"
+    }
+}
+
+dependencies {
+    compile 'com.carnival.sdk:carnival:2.5.+'
+}

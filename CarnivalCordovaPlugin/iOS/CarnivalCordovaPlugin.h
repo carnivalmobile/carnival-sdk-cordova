@@ -20,4 +20,7 @@
 // Stream
 - (void)showMessageStream:(CDVInvokedUrlCommand *)command;
 
+// Location
+-(void)updateLocation:(CDVInvokedUrlCommand *)command;
+
 @end

@@ -19,4 +19,9 @@ Carnival.prototype.showMessageStream = function() {
     cordova.exec(null, null, "CarnivalCordovaPlugin", "showMessageStream", []);
 };
 
+// Location
+Carnival.prototype.updateLocation = function(lat, lon) {
+    cordova.exec(null, null, "CarnivalCordovaPlugin", "updateLocation", [lat, lon]);
+}
+
 module.exports = new Carnival();

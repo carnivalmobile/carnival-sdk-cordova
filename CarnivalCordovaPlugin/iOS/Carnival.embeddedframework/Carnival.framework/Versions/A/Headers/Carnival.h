@@ -14,7 +14,20 @@
 #import <CoreLocation/CoreLocation.h>
 #import "CarnivalMessageStream.h"
 
-#define CARNIVAL_VERSION @"2.9"
+#define CARNIVAL_VERSION @"2.15.1"
+
+@protocol CarnivalIdentifierDataSource <NSObject>
+
+@required
+
+/**
+ *  Override this method and return the user's unique identifier for Carnival.
+ *
+ *  @return The user's unique identifier for Carnival.
+ */
+- (NSString *)carnivalUniqueIdentifier;
+
+@end
 
 @interface Carnival : NSObject
 
@@ -131,5 +144,32 @@
  *  @param notificationDict The userInfo dictionary from the remote notification you want the Carnival SDK to handle. This dictionary is normally passed back to you from the application:didReceiveRemoteNotification: method.
  */
 + (void)handleNotification:(NSDictionary *)notificationDict;
+
+/** @name Identifier */
+
+/**
+ *  Sets the Identifier dataSource which gives the Carnival SDK identifier information
+ *
+ *  @param dataSource An object that conforms to the CarnivalIdentifierDataSource protocol
+ */
++ (void)setIdentifierDataSource:(id<CarnivalIdentifierDataSource>)dataSource;
+
+/** @name Device details */
+
+/**
+ *  Returns the current device's ID as a NSString
+ *
+ *  @param completion A block which gets called after the current device is fetched containing the current device's ID
+ */
++ (void)deviceID:(void (^)(NSString *deviceID, NSError *error))completion;
+
+/** @name Enabling/Disabling in-app notifications */
+
+/**
+ *  Enables or disables the showing of in-app notifications
+ *
+ *  @param enabled A boolean value indicating whether in-app notfications are enabled
+ */
++ (void)setInAppNotificationsEnabled:(BOOL)enabled;
 
 @end
