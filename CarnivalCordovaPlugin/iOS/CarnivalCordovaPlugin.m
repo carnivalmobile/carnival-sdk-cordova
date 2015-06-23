@@ -9,10 +9,12 @@
 #import "CarnivalCordovaPlugin.h"
 #import <Carnival/Carnival.h>
 #import <Cordova/CDVConfigParser.h>
+#import "CustomBarButtonItem.h"
 
 @interface CarnivalCordovaPlugin () <CarnivalMessageStreamDelegate>
 
 @property (strong, nonatomic) NSDictionary *settings;
+@property (strong, nonatomic) UINavigationController *streamNavigationController;
 
 @end
 
@@ -47,16 +49,16 @@
 - (void)getTags:(CDVInvokedUrlCommand *)command {
     [self.commandDelegate runInBackground:^{
         [Carnival getTagsInBackgroundWithResponse:^(NSArray *tags, NSError *error) {
+            CDVPluginResult *result = nil;
+            
             if (error) {
-                CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
-                
-                [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+                result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
             }
             else {
-                CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:tags];
-                
-                [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+                result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:tags];
             }
+            
+            [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
         }];
     }];
 }
@@ -66,16 +68,16 @@
     
     [self.commandDelegate runInBackground:^{
         [Carnival setTagsInBackground:newTags withResponse:^(NSArray *tags, NSError *error) {
+            CDVPluginResult *result = nil;
+            
             if (error) {
-                CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
-                
-                [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+                result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
             }
             else {
-                CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:tags];
-                
-                [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+                result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:tags];
             }
+            
+            [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
         }];
     }];
 }
@@ -83,40 +85,87 @@
 #pragma mark - stream
 
 - (void)showMessageStream:(CDVInvokedUrlCommand *)command {
-    UINavigationController *streamNavigationController = [CarnivalMessageStream streamNavigationController];
+    CustomBarButtonItem *closeItem = [CustomBarButtonItem closeButtonForTarget:self action:@selector(closeButtonPressed:)];
     
-    [[[self appDelegate] window].rootViewController presentViewController:streamNavigationController animated:YES completion:^{
+    // Change the color of the close button on the message stream
+    [closeItem setTintColor:[UIColor blackColor]];
+    
+    CarnivalStreamViewController *streamVC = [[CarnivalStreamViewController alloc] init];
+    [streamVC.navigationItem setRightBarButtonItem:closeItem];
+    
+    UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:streamVC];
+    
+    // Change the color of the navigation bar
+    [navVC.navigationBar setBackgroundColor:[UIColor whiteColor]];
+    [navVC.navigationBar setBarTintColor:[UIColor whiteColor]];
+    
+    // Change the font and color of the nav bar text
+    [navVC.navigationBar setTitleTextAttributes:@{
+        NSFontAttributeName : [UIFont fontWithName:@"AvenirNext-Regular" size:15.0f],
+        NSForegroundColorAttributeName : [UIColor blackColor]
+    }];
+    
+    self.streamNavigationController = navVC;
+    
+    [[self presentingViewController] presentViewController:navVC animated:YES completion:^{
+        // Change the status bar foreground color, Note: you'll need to turn UIViewController-based status bar appearance off in your info.plist
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+        
         CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
         
         [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
     }];
 }
 
-#pragma mark - stream
-- (void)updateLocation:(CDVInvokedUrlCommand *)command {
-    double lat = [command.arguments[0] doubleValue];
-    double lon = [command.arguments[1] doubleValue];
-    [self.commandDelegate runInBackground:^{
-        CLLocation *location = [[CLLocation alloc] initWithLatitude:lat longitude:lon];
-        [Carnival updateLocation:location];
+#pragma mark - custom events
+
+- (void)logEvent:(CDVInvokedUrlCommand *)command {
+    if ([command.arguments count] > 0) {
+        NSString *eventName = command.arguments[0];
+        
+        if (eventName && [eventName isKindOfClass:[NSString class]]) {
+            [Carnival logEvent:eventName];
+        }
+    }
+}
+
+#pragma mark - pressed actions
+
+- (void)closeButtonPressed:(UIButton *)button {
+    [self.streamNavigationController dismissViewControllerAnimated:YES completion:^{
+        self.streamNavigationController = nil;
     }];
 }
 
-#pragma mark - CarnivalMessageStreamDelegae
+#pragma mark - location
 
-- (void)carnivalMessageStreamNeedsDisplay:(UINavigationController *)streamNavigationController fromApplicationState:(UIApplicationState)applicationState {
-    id appDelegate = self.appDelegate;
-    
-    if ([appDelegate conformsToProtocol:@protocol(UIApplicationDelegate)]) {
-        id<UIApplicationDelegate> applicationDelegate = appDelegate;
+- (void)updateLocation:(CDVInvokedUrlCommand *)command {
+    if ([command.arguments count] > 1) {
+        double lat = [command.arguments[0] doubleValue];
+        double lon = [command.arguments[1] doubleValue];
         
-        UIViewController *rootViewController = applicationDelegate.window.rootViewController;
-        
-        [rootViewController presentViewController:streamNavigationController animated:YES completion:NULL];
+        [self.commandDelegate runInBackground:^{
+            CLLocation *location = [[CLLocation alloc] initWithLatitude:lat longitude:lon];
+            [Carnival updateLocation:location];
+        }];
     }
 }
 
 #pragma mark - helpers
+
+- (UIViewController *)presentingViewController {
+    UIViewController *presentingViewController = [self hostAppMainWindow].rootViewController;
+    
+    while (presentingViewController.presentedViewController) {
+        presentingViewController = presentingViewController.presentedViewController;
+    }
+    
+    return presentingViewController;
+}
+
+- (UIWindow *)hostAppMainWindow {
+    return [UIApplication sharedApplication].delegate.window;
+}
 
 - (NSDictionary *)settingsFromConfigFile {
     CDVConfigParser *parserDelegate = [[CDVConfigParser alloc] init];

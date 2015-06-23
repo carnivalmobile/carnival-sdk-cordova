@@ -73,6 +73,10 @@
 
 		<header-file src="CarnivalCordovaPlugin/iOS/CarnivalCordovaPlugin.h"/>
 		<source-file src="CarnivalCordovaPlugin/iOS/CarnivalCordovaPlugin.m"/>
+		<header-file src="CarnivalCordovaPlugin/iOS/CustomBarButtonItem.h"/>
+		<source-file src="CarnivalCordovaPlugin/iOS/CustomBarButtonItem.m"/>
+
+		<resource-file src="CarnivalCordovaPlugin/iOS/cp_close_button@2x.png" />
 
 		<framework src="CoreLocation.framework" />
 		<framework src="CoreGraphics.framework" />
