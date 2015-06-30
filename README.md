@@ -71,9 +71,97 @@ Asyncronously sets the tags for Carnival for this Device.
 ```js
 Carnival.showMessageStream();
 ```
-Shows the Carnival Message Stream
+Shows the Carnival Message Stream.
 
 ```js
 Carnival.updateLocation([-41.292322, 174.777888]);
 ```
 Sends a location update to Carnival.
+
+```js
+Carnival.logEvent("event_name");
+```
+Logs a custom event with the given name.
+
+```js
+Carnival.setString(
+                  function callback() {
+                    console.log('setString successfully returned');
+                  },
+                  function errorHandler(err) {
+                    console.log('setString returned error: ' + err);
+                  },
+                  "test_string",
+                  "test_string_key"
+                );
+```
+Sets a string custom attribute for the given key
+
+```js
+Carnival.setFloat(
+                  function callback() {
+                    console.log('setFloat successfully returned');
+                  },
+                  function errorHandler(err) {
+                    console.log('setFloat returned error: ' + err);
+                  },
+                  1.23,
+                  "test_float_key"
+                );
+```
+Sets a float custom attribute for the given key
+
+```js
+Carnival.setInteger(
+                    function callback() {
+                      console.log('setFloat successfully returned');
+                    },
+                    function errorHandler(err) {
+                      console.log('setFloat returned error: ' + err);
+                    },
+                    1,
+                    "test_integer_key"
+                  );
+```
+Sets a integer custom attribute for the given key
+
+```js
+Carnival.setDate(
+                  function callback() {
+                    console.log('setDate successfully returned');
+                  },
+                  function errorHandler(err) {
+                    console.log('setDate returned error: ' + err);
+                  },
+                  new Date(),
+                  "test_date_key"
+                );
+```
+Sets a date custom attribute for the given key
+
+```js
+Carnival.setBool(
+                  function callback() {
+                    console.log('setBool successfully returned');
+                  },
+                  function errorHandler(err) {
+                    console.log('setBool returned error: ' + err);
+                  },
+                  true,
+                  "test_bool_key"
+                );
+```
+Sets a boolean custom attribute for the given key
+
+```js
+Carnival.removeAttribute(
+                          function callback() {
+                            console.log('removeAttribute successfully returned');
+                          },
+                          function errorHandler(err) {
+                            console.log('removeAttribute returned error: ' + err);
+                          },
+                          "test_bool_key"
+                        );
+```
+Removes the custom attribute for the given key
