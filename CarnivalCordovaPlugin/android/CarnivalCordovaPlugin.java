@@ -3,6 +3,7 @@ package com.carnivalmobile.carnivalcordovaplugin;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
@@ -29,6 +30,13 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
 	private static final String ACTION_SET_TAGS = "setTags";
 	private static final String ACTION_SHOW_MESSAGE_STREAM = "showMessageStream";
 	private static final String ACTION_UPDATE_LOCATION = "updateLocation";
+	private static final String ACTION_LOG_EVENT = "logEvent";
+	private static final String ACTION_SET_STRING = "setString";
+	private static final String ACTION_SET_INTEGER = "setInteger";
+	private static final String ACTION_SET_FLOAT = "setFloat";
+	private static final String ACTION_SET_BOOLEAN = "setBool";
+	private static final String ACTION_SET_DATE = "setDate";
+	private static final String ACTION_REMOVE_ATTRIBUTE = "removeAttribute";
 	
 
 	@Override
@@ -55,6 +63,20 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
 			showMessageStream();
 		} else if (ACTION_UPDATE_LOCATION.equals(action)) {
 			updateLocation(args.getJSONArray(0));
+		} else if (ACTION_LOG_EVENT.equals(action)) {
+			logEvent(args.getJSONArray(0));
+		} else if (ACTION_SET_STRING.equals(action)) {
+			setString(args.getJSONArray(0));
+		} else if (ACTION_SET_INTEGER.equals(action)) {
+			setInteger(args.getJSONArray(0));
+		} else if (ACTION_SET_FLOAT.equals(action)) {
+			setFloat(args.getJSONArray(0));
+		} else if (ACTION_SET_BOOLEAN.equals(action)) {
+			setBoolean(args.getJSONArray(0));
+		} else if (ACTION_SET_DATE.equals(action)) {
+			setDate(args.getJSONArray(0));
+		} else if (ACTION_REMOVE_ATTRIBUTE.equals(action)) {
+			removeAttribute(args.getJSONArray(0));
 		} else {
 			return false;
 		}
@@ -152,6 +174,52 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
 		location.setLongitude(lon);
 
 		Carnival.updateLocation(location);
+	}
+
+	private void logEvent(JSONArray args) throws JSONException {
+		String event = args.getString(0);
+		Carnival.logEvent(event);
+	}
+
+	private void setString(JSONArray args) throws JSONException {
+		String key = args.getString(1);
+		String value = args.getString(0);
+
+		Carnival.setAttribute(key, value);
+	}
+
+	private void setInteger(JSONArray args) throws JSONException {
+		String key = args.getString(1);
+		int value = args.getInt(0);
+
+		Carnival.setAttribute(key, value);
+	}
+
+	private void setBoolean(JSONArray args) throws JSONException {
+		String key = args.getString(1);
+		boolean value = args.getBoolean(0);
+
+		Carnival.setAttribute(key, value);
+	}
+
+	private void setFloat(JSONArray args) throws JSONException {
+		String key = args.getString(1);
+		float value = (float) args.getDouble(0);
+
+		Carnival.setAttribute(key, value);
+	}
+
+	private void setDate(JSONArray args) throws JSONException {
+		String key = args.getString(1);
+		Date value = new Date(args.getInt(0));
+
+		Carnival.setAttribute(key, value);
+	}
+
+	private void removeAttribute(JSONArray args) throws JSONException {
+		String key = args.getString(0);
+
+		Carnival.removeAttribute(key);
 	}
 
 }

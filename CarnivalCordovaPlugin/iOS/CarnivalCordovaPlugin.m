@@ -15,6 +15,7 @@
 
 @property (strong, nonatomic) NSDictionary *settings;
 @property (strong, nonatomic) UINavigationController *streamNavigationController;
+@property (strong, nonatomic) NSDateFormatter *dateFormatter;
 
 @end
 
@@ -30,6 +31,15 @@
     return _settings;
 }
 
+- (NSDateFormatter *)dateFormatter {
+    if (!_dateFormatter) {
+        _dateFormatter = [[NSDateFormatter alloc] init];
+        _dateFormatter.dateFormat = @"YYYY-MM-dd'T'HH:mm:ss.SSSZ";
+    }
+    
+    return _dateFormatter;
+}
+
 #pragma mark - start engine
 
 - (void)startEngine:(CDVInvokedUrlCommand *)command {
@@ -40,7 +50,7 @@
         
         [CarnivalMessageStream setDelegate:self];
         
-        [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK] callbackId:command.callbackId];
+        [self sendPluginResultWithStatus:CDVCommandStatus_OK forCommand:command];
     }];
 }
 
@@ -49,16 +59,7 @@
 - (void)getTags:(CDVInvokedUrlCommand *)command {
     [self.commandDelegate runInBackground:^{
         [Carnival getTagsInBackgroundWithResponse:^(NSArray *tags, NSError *error) {
-            CDVPluginResult *result = nil;
-            
-            if (error) {
-                result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
-            }
-            else {
-                result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:tags];
-            }
-            
-            [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+            [self sendPluginResultWithPossibleError:error array:tags forCommand:command];
         }];
     }];
 }
@@ -68,16 +69,7 @@
     
     [self.commandDelegate runInBackground:^{
         [Carnival setTagsInBackground:newTags withResponse:^(NSArray *tags, NSError *error) {
-            CDVPluginResult *result = nil;
-            
-            if (error) {
-                result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
-            }
-            else {
-                result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:tags];
-            }
-            
-            [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+            [self sendPluginResultWithPossibleError:error array:tags forCommand:command];
         }];
     }];
 }
@@ -111,9 +103,7 @@
         // Change the status bar foreground color, Note: you'll need to turn UIViewController-based status bar appearance off in your info.plist
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
         
-        CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-        
-        [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+        [self sendPluginResultWithStatus:CDVCommandStatus_OK forCommand:command];
     }];
 }
 
@@ -122,7 +112,7 @@
 - (void)logEvent:(CDVInvokedUrlCommand *)command {
     if ([command.arguments count] > 0) {
         NSString *eventName = command.arguments[0];
-        
+    
         if (eventName && [eventName isKindOfClass:[NSString class]]) {
             [Carnival logEvent:eventName];
         }
@@ -140,7 +130,9 @@
 #pragma mark - location
 
 - (void)updateLocation:(CDVInvokedUrlCommand *)command {
-    if ([command.arguments count] > 1) {
+    NSArray *arguments = command.arguments;
+    
+    if ([arguments count] > 1) {
         double lat = [command.arguments[0] doubleValue];
         double lon = [command.arguments[1] doubleValue];
         
@@ -149,6 +141,145 @@
             [Carnival updateLocation:location];
         }];
     }
+}
+
+#pragma mark - custom attributes
+
+- (void)setString:(CDVInvokedUrlCommand *)command {
+    NSArray *arguments = command.arguments;
+    
+    if ([arguments count] > 1) {
+        NSString *string = arguments[0];
+        NSString *key = arguments[1];
+        
+        if ([string isKindOfClass:[NSString class]] && [key isKindOfClass:[NSString class]]) {
+            [self.commandDelegate runInBackground:^{
+                [Carnival setString:string forKey:key withResponse:^(NSError *error) {
+                    [self sendPluginResultWithPossibleError:error forCommand:command];
+                }];
+            }];
+        }
+    }
+}
+
+- (void)setFloat:(CDVInvokedUrlCommand *)command {
+    NSArray *arguments = command.arguments;
+    
+    if ([arguments count] > 1) {
+        CGFloat aFloat = [arguments[0] floatValue];
+        NSString *key = arguments[1];
+        
+        if ([key isKindOfClass:[NSString class]]) {
+            [self.commandDelegate runInBackground:^{
+                [Carnival setFloat:aFloat forKey:key withResponse:^(NSError *error) {
+                    [self sendPluginResultWithPossibleError:error forCommand:command];
+                }];
+            }];
+        }
+    }
+}
+
+- (void)setInteger:(CDVInvokedUrlCommand *)command {
+    NSArray *arguments = command.arguments;
+    
+    if ([arguments count] > 1) {
+        NSInteger anInteger = [arguments[0] integerValue];
+        NSString *key = arguments[1];
+        
+        if ([key isKindOfClass:[NSString class]]) {
+            [self.commandDelegate runInBackground:^{
+                [Carnival setInteger:anInteger forKey:key withResponse:^(NSError *error) {
+                    [self sendPluginResultWithPossibleError:error forCommand:command];
+                }];
+            }];
+        }
+    }
+}
+
+- (void)setDate:(CDVInvokedUrlCommand *)command {
+    NSArray *arguments = command.arguments;
+    
+    if ([arguments count] > 1) {
+        NSString *dateString = arguments[0];
+        NSString *key = arguments[1];
+        
+        if ([dateString isKindOfClass:[NSString class]] && [key isKindOfClass:[NSString class]]) {
+            NSDate *date = [self.dateFormatter dateFromString:dateString];
+            
+            if (date) {
+                [self.commandDelegate runInBackground:^{
+                    [Carnival setDate:date forKey:key withResponse:^(NSError *error) {
+                        [self sendPluginResultWithPossibleError:error forCommand:command];
+                    }];
+                }];
+            }
+        }
+    }
+}
+
+- (void)setBool:(CDVInvokedUrlCommand *)command {
+    NSArray *arguments = command.arguments;
+    
+    if ([arguments count] > 1) {
+        BOOL aBool = [arguments[0] boolValue];
+        NSString *key = arguments[1];
+        
+        if ([key isKindOfClass:[NSString class]]) {
+            [self.commandDelegate runInBackground:^{
+                [Carnival setBool:aBool forKey:key withResponse:^(NSError *error) {
+                    [self sendPluginResultWithPossibleError:error forCommand:command];
+                }];
+            }];
+        }
+    }
+}
+
+- (void)removeAttribute:(CDVInvokedUrlCommand *)command {
+    NSArray *arguments = command.arguments;
+    
+    if ([arguments count] > 0) {
+        NSString *key = arguments[0];
+        
+        if ([key isKindOfClass:[NSString class]]) {
+            [self.commandDelegate runInBackground:^{
+                [Carnival removeAttributeWithKey:key withResponse:^(NSError *error) {
+                    [self sendPluginResultWithPossibleError:error forCommand:command];
+                }];
+            }];
+        }
+    }
+}
+
+#pragma mark - sending plugin results
+
+- (void)sendPluginResultWithStatus:(CDVCommandStatus)status forCommand:(CDVInvokedUrlCommand *)command {
+    CDVPluginResult *result = [CDVPluginResult resultWithStatus:status];
+    
+    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+}
+
+- (void)sendPluginResultWithPossibleError:(NSError *)error array:(NSArray *)array forCommand:(CDVInvokedUrlCommand *)command {
+    CDVPluginResult *result = [self pluginResultWithPossibleError:error array:array];
+    
+    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+}
+
+- (void)sendPluginResultWithPossibleError:(NSError *)error forCommand:(CDVInvokedUrlCommand *)command {
+    CDVPluginResult *result = [self pluginResultWithPossibleError:error];
+    
+    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+}
+
+#pragma mark - creating plugin results
+
+- (CDVPluginResult *)pluginResultWithPossibleError:(NSError *)error array:(NSArray *)array {
+    if (error) return [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
+    else return [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:array];
+}
+
+- (CDVPluginResult *)pluginResultWithPossibleError:(NSError *)error {
+    if (error) return [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
+    else return [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
 }
 
 #pragma mark - helpers
