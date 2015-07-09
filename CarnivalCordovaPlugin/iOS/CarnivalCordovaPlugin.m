@@ -250,10 +250,24 @@
     }
 }
 
+#pragma mark - unread count
+
+- (void)unreadCount:(CDVInvokedUrlCommand *)command {
+    [self.commandDelegate runInBackground:^{
+        [CarnivalMessageStream unreadCount:^(NSUInteger unreadCount, NSError *error) {
+            [self sendPluginResultWithPossibleError:error andInt:unreadCount forCommand:command];
+        }];
+    }];
+}
+
 #pragma mark - sending plugin results
 
 - (void)sendPluginResultWithStatus:(CDVCommandStatus)status forCommand:(CDVInvokedUrlCommand *)command {
-    CDVPluginResult *result = [CDVPluginResult resultWithStatus:status];
+    [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:status] callbackId:command.callbackId];
+}
+
+- (void)sendPluginResultWithPossibleError:(NSError *)error andInt:(int)anInt forCommand:(CDVInvokedUrlCommand *)command {
+    CDVPluginResult *result = [self pluginResultWithPossibleError:error andInt:anInt];
     
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
 }
@@ -271,6 +285,11 @@
 }
 
 #pragma mark - creating plugin results
+
+- (CDVPluginResult *)pluginResultWithPossibleError:(NSError *)error andInt:(int)anInt {
+    if (error) return [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
+    else return [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:anInt];
+}
 
 - (CDVPluginResult *)pluginResultWithPossibleError:(NSError *)error array:(NSArray *)array {
     if (error) return [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];

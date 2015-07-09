@@ -37,6 +37,7 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
 	private static final String ACTION_SET_BOOLEAN = "setBool";
 	private static final String ACTION_SET_DATE = "setDate";
 	private static final String ACTION_REMOVE_ATTRIBUTE = "removeAttribute";
+	private static final String ACTION_UNREAD_COUNT = "unreadCount";
 	
 
 	@Override
@@ -77,6 +78,8 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
 			setDate(args.getJSONArray(0));
 		} else if (ACTION_REMOVE_ATTRIBUTE.equals(action)) {
 			removeAttribute(args.getJSONArray(0));
+		} else if (ACTION_UNREAD_COUNT.equals(action)) {
+			callbackContext.success(""+Carnival.getUnreadMessageCount());
 		} else {
 			return false;
 		}

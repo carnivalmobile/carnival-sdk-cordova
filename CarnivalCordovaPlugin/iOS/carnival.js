@@ -54,4 +54,9 @@ Carnival.prototype.logEvent = function(name) {
     cordova.exec(null, null, "CarnivalCordovaPlugin", "logEvent", [name]);
 }
 
+// Unread Count
+Carnival.prototype.unreadCount = function(onSuccess, onFailure) {
+    cordova.exec(onSuccess, onFailure, "CarnivalCordovaPlugin", "unreadCount", [])
+}
+
 module.exports = new Carnival();

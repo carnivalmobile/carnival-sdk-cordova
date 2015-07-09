@@ -23,4 +23,15 @@
 // Location
 -(void)updateLocation:(CDVInvokedUrlCommand *)command;
 
+// Custom Attributes
+- (void)setString:(CDVInvokedUrlCommand *)command;
+- (void)setFloat:(CDVInvokedUrlCommand *)command;
+- (void)setInteger:(CDVInvokedUrlCommand *)command;
+- (void)setDate:(CDVInvokedUrlCommand *)command;
+- (void)setBool:(CDVInvokedUrlCommand *)command;
+- (void)removeAttribute:(CDVInvokedUrlCommand *)command;
+
+// UnreadCount
+- (void)unreadCount:(CDVInvokedUrlCommand *)command;
+
 @end
