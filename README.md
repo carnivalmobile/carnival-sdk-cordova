@@ -67,7 +67,6 @@ Carnival.setTags(
 ```
 Asyncronously sets the tags for Carnival for this Device.
 
-
 ```js
 Carnival.showMessageStream();
 ```
@@ -165,3 +164,126 @@ Carnival.removeAttribute(
                         );
 ```
 Removes the custom attribute for the given key
+
+```js
+// Disable
+Carnival.setInAppNotificationsEnabled(false);
+
+// Enable
+Carnival.setInAppNotificationsEnabled(true);
+```
+Enabling/Disabling in-app notifications. These functions do nothing on Android.
+
+```js
+Carnival.setUserId(
+                    function callback(data) {
+                        console.log('setUserId successfully returned');
+                    },
+                    function errorHandler(err) {
+                        console.log('setUserId returned error: ' + err);
+                    },
+                    'TEST_USER_ID'
+                    );
+```
+Setting a user ID.
+
+
+```js
+Carnival.messages(
+                  function callback(data) {
+                    console.log('messages successfully returned: ' + data);
+                  },
+                  function errorHandler(err) {
+                    console.log('messages error: ' + err);
+                  }
+                  );
+```
+Getting messages.
+
+There are 3 MessageImpressionType's: StreamView, DetailView and InAppView.
+```js
+Carnival.registerImpression(Carnival.MessageImpressionType.DetailView, message);
+```
+Registering message impressions.
+
+```js
+Carnival.removeMessage(
+                        function callback(data) {
+                          console.log('removeMessage successfully returned');
+                        },
+                        function errorHandler(err) {
+                          console.log('removeMessage returned error: ' + err);
+                        },
+                        messageJSON
+                      )
+```
+Removing a message.
+
+```js
+Carnival.markMessageAsRead(
+                           function callback(data) {
+                            console.log('markMessageAsRead successfully returned');
+                           },
+                           function errorHandler(err) {
+                            console.log('markMessageAsRead error: ' + err);
+                           },
+                           messageJSON
+                           );
+```
+Mark a message as read.
+
+```js
+Carnival.markMessagesAsRead(
+                            function callback(data) {
+                                console.log('markMessagesAsRead successfully returned');
+                            },
+                            function errorHandler(err) {
+                                console.log('markMessagesAsRead error: ' + err);
+                            },
+                            data
+                            );
+```
+Marking an array of messages as read.
+
+```js
+Carnival.presentMessageDetail(message);
+```
+Presenting the message detail screen for a message.
+
+```js
+Carnival.dismissMessageDetail();
+```
+Dismissing message detail. (This method does nothing on Android as Activity dismissal is handled by the Activity)
+
+```js
+Carnival.unreadCount(
+                    function callback(unreadCount) {
+                      console.log('unreadCount succesfully returned: ' + unreadCount);
+                    },
+                    function errorHandler(err) {
+                      console.log('unreadCount error: ' + err);
+                    }
+                    );
+```
+Getting the unreadCount of the Carnival Message Stream.
+
+```js
+document.addEventListener('unreadcountdidchange', this.onUnreadCountChange, false);
+...
+onUnreadCountChange: function(event) {
+    console.log('unreadCountChanged: ' + event.detail.unreadCount);
+}
+```
+Receiving unreadCountDidChange events
+
+```js
+Carnival.deviceID(
+                  function callback(deviceID) {
+                     console.log('deviceID successfully returned: ' + deviceID);
+                  },
+                  function errorHandler(err) {
+                     console.log('deviceID error: ' + err);
+                  }
+                  );
+```
+Gets the current device's deviceID.

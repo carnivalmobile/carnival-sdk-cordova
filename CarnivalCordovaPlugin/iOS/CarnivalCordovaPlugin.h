@@ -34,4 +34,28 @@
 // UnreadCount
 - (void)unreadCount:(CDVInvokedUrlCommand *)command;
 
+// Enabling/disabling in-app notifications
+- (void)setInAppNotificationsEnabled:(CDVInvokedUrlCommand *)command;
+
+// Marking messages as read
+- (void)markMessageAsRead:(CDVInvokedUrlCommand *)command;
+- (void)markMessagesAsRead:(CDVInvokedUrlCommand *)command;
+
+// Users
+- (void)setUserId:(CDVInvokedUrlCommand *)command;
+
+// Messages
+- (void)messages:(CDVInvokedUrlCommand *)command;
+- (void)removeMessage:(CDVInvokedUrlCommand *)command;
+
+// Registering impressions
+- (void)registerImpression:(CDVInvokedUrlCommand *)command;
+
+// Present/dismiss message detail
+- (void)presentMessageDetail:(CDVInvokedUrlCommand *)command;
+- (void)dismissMessageDetail:(CDVInvokedUrlCommand *)command;
+
+// DeviceID
+- (void)deviceID:(CDVInvokedUrlCommand *)command;
+
 @end
