@@ -59,7 +59,9 @@
             
             NSString *JSString = [NSString stringWithFormat:formatString, [unreadCount integerValue]];
 
-            [self.webView stringByEvaluatingJavaScriptFromString:JSString];
+            dispatch_async(dispatch_get_main_queue(), ^{ // Make sure we're on the main thread for UIKit interactions - otherwise we'll crash. Cordova is calling these on a background thread for some reason.
+                [self.webView stringByEvaluatingJavaScriptFromString:JSString];
+            });
         }
     }
 }
