@@ -122,7 +122,7 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
 		} else if (ACTION_MESSAGES.equals(action)) {
 			getMessages(callbackContext);
 		} else if (ACTION_IN_APP_ENABLED.equals(action)) {
-			//Do Nothing
+			setInAppNotificationsEnabled(args.getJSONArray(0));
 		} else if (ACTION_REGISTER_IMPRESSION.equals(action)) {
 			registerImpression(args, callbackContext);
 		} else if (ACTION_REMOVE_MESSAGE.equals(action)) {
@@ -235,6 +235,11 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
 	private void logEvent(JSONArray args) throws JSONException {
 		String event = args.getString(0);
 		Carnival.logEvent(event);
+	}
+
+	private void setInAppNotificationsEnabled(JSONArray args) throws JSONException {
+		boolean enable = args.getBoolean(0);
+		Carnival.setInAppNotificationsEnabled(enable);
 	}
 
 	private void setString(JSONArray args) throws JSONException {
