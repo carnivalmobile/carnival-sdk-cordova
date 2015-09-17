@@ -92,7 +92,7 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
 				}
 			});
 		} else if (ACTION_SET_TAGS.equals(action)) {
-				setTags(args);	
+				setTags(args, callbackContext);	
 		} else if (ACTION_SHOW_MESSAGE_STREAM.equals(action)) {
 			showMessageStream();
 		} else if (ACTION_UPDATE_LOCATION.equals(action)) {
@@ -193,18 +193,29 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
 	}
 	
 	/**
-	 * @param args
+	 * @param args JSON array containing a number of string elements: ["EXAMPLE_SET_TAG_1","EXAMPLE_SET_TAG_2"]
 	 * @throws JSONException
 	 */
-	private void setTags(JSONArray args) throws JSONException {
-		JSONArray jsonTags = args.getJSONArray(0);
+	private void setTags(JSONArray args, final CallbackContext callbackContext) throws JSONException {
+
+		JSONArray jsonTags = args;
 		
 		List<String> list = new ArrayList<String>();
 		for (int i=0; i<jsonTags.length(); i++) {
 			list.add( jsonTags.getString(i) );
 		}
 		
-		Carnival.setTags(list);
+		Carnival.setTagsWithResponse(list, new Carnival.TagsHandler() {
+            @Override
+            public void onSuccess(List<String> list) {
+                callbackContext.success(new JSONArray(list));
+            }
+
+            @Override
+            public void onFailure(Error error) {
+            	callbackContext.error(error.getLocalizedMessage());
+            }
+        });
 	}
 	
 	/**
