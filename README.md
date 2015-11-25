@@ -33,7 +33,13 @@ e.g.
 </platform>
 ```
 
+#### Android Notification Icon
 
+During the `startEngine` call on Android, the plugin will look for a drawable in the android project called "ic_stat_notification". This drawable will be loaded as the notification icon in the status bar for all push notifications in your application.
+
+The required icon files can be generated using Android Studio or on online generator such as [Romannurik's Android Asset Studio](https://romannurik.github.io/AndroidAssetStudio/icons-notification.html#source.space.trim=1&source.space.pad=0&name=ic_stat_notification).
+
+These files have to be added to your android project's drawable folder in order for Android to be able to locate them.
 
 ### Methods
 

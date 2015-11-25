@@ -187,6 +187,11 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
 			e.printStackTrace();
 		}
 		parser.close();
+
+		int id = activity.getResources().getIdentifier("ic_stat_notification", "drawable", activity.getPackageName());
+        if (id != 0) {
+            Carnival.setNotificationIcon(id);
+        }
 		Carnival.startEngine(this.cordova.getActivity(), carnivalProjectNumber, carnivalAppKey);
 
 		setup();
