@@ -18,11 +18,11 @@ e.g.
 </platform>
 ```
 
-Open your Xcode project, which should be located in the `platforms/ios` directory of your Cordova/Phonegap project and Drag and drop the `Carnival.embeddedframework` into it. The `Carnival.embeddedframework` can be downloaded from the [Carnival iOS SDK repo](https://github.com/carnivalmobile/carnival-ios-sdk/releases).
+(Optional) To be sure the iOS SDK is up to date; open your Xcode project, which should be located in the `platforms/ios` directory of your Cordova/Phonegap project and Drag and drop the `Carnival.embeddedframework` into it. The `Carnival.embeddedframework` can be downloaded from the [Carnival iOS SDK repo](https://github.com/carnivalmobile/carnival-ios-sdk/releases).
 
 ### Android
 
-Add these preferences to your `config.xml` file with your Carnival App key (from [http://app.carnivalmobile.com](http://app.carnivalmobile.com)) and your Project Number as described in the [Setting Up GCM](http://docs.carnivalmobile.com/sdk/android/current/gcm/) documentation.
+Add these preferences to your `config.xml` file with your Carnival App key (from [http://app.carnivalmobile.com](http://app.carnivalmobile.com)) and your Project Number as described in the [Setting Up GCM](http://docs.carnival.io/docs/enable-push-notifications-for-android) documentation.
 
 e.g.
 
@@ -40,6 +40,18 @@ During the `startEngine` call on Android, the plugin will look for a drawable in
 The required icon files can be generated using Android Studio or on online generator such as [Romannurik's Android Asset Studio](https://romannurik.github.io/AndroidAssetStudio/icons-notification.html#source.space.trim=1&source.space.pad=0&name=ic_stat_notification).
 
 These files have to be added to your android project's drawable folder in order for Android to be able to locate them.
+
+Users of PhoneGap Build are not able to set a notification icon.
+
+#### PhoneGap Build
+To use Carnival with PhoneGap Build (PGB) there a few additional steps to take.
+
+1. Change the ID on the pluign to something unique to your project, as this has to remain unique within the PhoneGap plugin repo. 
+2. Add `<preference name="android-build-tool" value="gradle" />` to your App's config.xml such that PBG will use Gradle to build and manage dependencies on Android. 
+
+PGB can be tricky, so feel free to [contact us](support@carnival.io) if you need assistance here. We are happy to help. 
+
+Note: We're not using NPM because of the inability to distribute .framework files with NPM such that they'll work in PBG. We hope this will be resolved soon.
 
 ### Methods
 

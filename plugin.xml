@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin id="com.carnivalmobile.carnivalcordovaplugin" version="1.6.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+<plugin id="com.carnivalmobile.carnivalcordovaplugin" version="1.6.2" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
 	<engines>
 		<engine name="cordova" version=">=3.4.0"/>
 	</engines>
 	<name>CarnivalCordovaPlugin</name>
-	<license>Please refer to our privacy policy and terms of service at http://carnivalmobile.com</license>
+	<description>Carnival SDK for Cordova and PhoneGap Applications</description>
+
+	<license>Please refer to our privacy policy and terms of service at http://carnival.io</license>
 
 	<platform name="android">
 

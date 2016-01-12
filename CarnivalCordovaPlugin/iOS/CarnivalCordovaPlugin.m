@@ -13,8 +13,8 @@
 
 @interface CarnivalMessage ()
 
-- (carnival_nullable instancetype)initWithDictionary:(carnival_nonnull NSDictionary *)dictionary;
-- (carnival_nonnull NSDictionary *)dictionary;
+- (nullable instancetype)initWithDictionary:(nonnull NSDictionary *)dictionary;
+- (nonnull NSDictionary *)dictionary;
 
 @end
 
@@ -93,7 +93,7 @@
     NSString *appKey = self.settings[@"carnival_ios_app_key"];
     
     [self.commandDelegate runInBackground:^{
-        [Carnival startEngine:appKey];
+        [Carnival startEngine:appKey ignoreAutoAnalyticsSources:@[CarnivalAutoAnalyticsSourceAll]];
         
         [CarnivalMessageStream setDelegate:self];
         
