@@ -88,17 +88,24 @@
 #pragma mark - start engine
 
 - (void)startEngine:(CDVInvokedUrlCommand *)command {
-    [self setup];
+    NSArray *arguments = command.arguments;
 
-    NSString *appKey = self.settings[@"carnival_ios_app_key"];
+    if ([arguments count] > 0)
+    {
+        [self setup];
+
+        __block BOOL registerForPush = [command.arguments[0] boolValue];
+
+        NSString *appKey = self.settings[@"carnival_ios_app_key"];
     
-    [self.commandDelegate runInBackground:^{
-        [Carnival startEngine:appKey ignoreAutoAnalyticsSources:@[CarnivalAutoAnalyticsSourceAll]];
+        [self.commandDelegate runInBackground:^{
+            [Carnival startEngine:appKey registerForPushNotifications:registerForPush ignoreAutoAnalyticsSources:@[CarnivalAutoAnalyticsSourceAll]];
         
-        [CarnivalMessageStream setDelegate:self];
+            [CarnivalMessageStream setDelegate:self];
         
-        [self sendPluginResultWithStatus:CDVCommandStatus_OK forCommand:command];
-    }];
+            [self sendPluginResultWithStatus:CDVCommandStatus_OK forCommand:command];
+        }];    
+    }
 }
 
 #pragma mark - tags
@@ -466,6 +473,20 @@
             [self sendPluginResultWithPossibleError:error string:deviceID forCommand:command];
         }];
     }];
+}
+
+// Push Registration
+- (void)registerForPushNotifications:(CDVInvokedUrlCommand *)command {
+    UIUserNotificationType types = UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound;
+
+    if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]) { // iOS 8+
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:types categories:nil];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    }
+    else { //iOS 7
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationType)types];
+    }
 }
 
 #pragma mark - sending plugin results

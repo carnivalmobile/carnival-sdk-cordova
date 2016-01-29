@@ -114,7 +114,7 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
 		} else if (ACTION_UNREAD_COUNT.equals(action)) {
 			callbackContext.success(""+Carnival.getUnreadMessageCount());
 		} else if (ACTION_DEVICE_ID.equals(action)) {
-			callbackContext.success(Carnival.getDeviceId());
+			getDeviceId(callbackContext);
 		}else if (ACTION_PRESENT_DETAIL.equals(action)) {
 			presentMessageDetail(args.getJSONObject(0));
 		}else if (ACTION_DISMISS_DETAIL.equals(action)) {
@@ -235,6 +235,20 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
 				activity.startActivity(i);
 			}
 		});
+	}
+
+	private void getDeviceId(final CallbackContext callbackContext) {
+		Carnival.getDeviceId(new Carnival.CarnivalHandler<String>() {
+            @Override
+            public void onSuccess(String value) {
+                callbackContext.success(Carnival.getDeviceId());
+            }
+
+            @Override
+            public void onFailure(Error error) {
+            	callbackContext.error(error.getLocalizedMessage());
+            }
+        });
 	}
 
 	private void updateLocation(JSONArray args) throws JSONException {

@@ -56,9 +56,9 @@ Note: We're not using NPM because of the inability to distribute .framework file
 ### Methods
 
 ```js
-Carnival.startEngine();
+Carnival.startEngine(true);
 ```
-Sets the Carnival appKey credentials for this app. This method uses the value of the `carnival_ios_app_key` in your config.xml file.
+Sets the Carnival appKey credentials for this app. This method uses the value of the `carnival_ios_app_key` in your config.xml file. On iOS, if true, the device will register for push notifications and prompt the user. If you wish to delay this prompt, such as with an onboarding scenario, then pass in false and call `Carnival.registerForPushNotifications()` at a later point.
  
  ```js
 Carnival.getTags(
@@ -305,3 +305,8 @@ Carnival.deviceID(
 );
 ```
 Gets the current device's deviceID.
+
+```js
+Carnival.registerForPushNotifications();
+```
+Registers for push notifications, prompting the user on iOS to allow notifications. For use when you pass `false` to startEngine. 

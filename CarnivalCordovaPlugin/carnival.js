@@ -3,8 +3,8 @@ function Carnival() {}
 Carnival.prototype.MessageImpressionType = {"StreamView":2000, "DetailView":2001, "InAppView":2002};
 
 // Initialization
-Carnival.prototype.startEngine = function() {
-    cordova.exec(null, null, "CarnivalCordovaPlugin", "startEngine", []);
+Carnival.prototype.startEngine = function(registerForPushNotifications) {
+    cordova.exec(null, null, "CarnivalCordovaPlugin", "startEngine", [registerForPushNotifications]);
 };
 
 // Tags
@@ -105,6 +105,11 @@ Carnival.prototype.dismissMessageDetail = function() {
 // DeviceID
 Carnival.prototype.deviceID = function(onSuccess, onFailure) {
     cordova.exec(onSuccess, onFailure, "CarnivalCordovaPlugin", "deviceID", []);
+};
+
+// Push Registration - iOS Only. Pass in false to startEngine and the call this function at an appropriate time.
+Carnival.prototype.registerForPushNotifications = function() {
+    cordova.exec(null, null, "CarnivalCordovaPlugin", "registerForPushNotifications", []);
 };
 
 module.exports = new Carnival();

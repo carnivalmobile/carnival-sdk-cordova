@@ -58,4 +58,7 @@
 // DeviceID
 - (void)deviceID:(CDVInvokedUrlCommand *)command;
 
+// Push Registration
+- (void)registerForPushNotifications:(CDVInvokedUrlCommand *)command;
+
 @end
