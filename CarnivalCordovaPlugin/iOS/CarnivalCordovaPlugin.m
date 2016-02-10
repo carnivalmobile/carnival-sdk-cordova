@@ -52,16 +52,20 @@
 - (void)unreadCountDidChange:(NSNotification *)notification {
     if (notification) {
         NSNumber *unreadCount = notification.userInfo[CarnivalMessageStreamUnreadCountKey];
-        
+
         if (unreadCount) {
             NSString *formatString = @" var event = new CustomEvent('unreadcountdidchange', { detail : {'unreadCount': %i }});" \
                                      "  document.dispatchEvent(event);";
-            
+
             NSString *JSString = [NSString stringWithFormat:formatString, [unreadCount integerValue]];
 
-            dispatch_async(dispatch_get_main_queue(), ^{ // Make sure we're on the main thread for UIKit interactions - otherwise we'll crash. Cordova is calling these on a background thread for some reason.
-                [self.webView stringByEvaluatingJavaScriptFromString:JSString];
-            });
+            if ([self.webView respondsToSelector:@selector(stringByEvaluatingJavaScriptFromString:)]) {
+                // Cordova-iOS pre-4
+                [self.webView performSelectorOnMainThread:@selector(stringByEvaluatingJavaScriptFromString:) withObject:JSString waitUntilDone:NO];
+            } else {
+                // Cordova-iOS 4+
+                [self.webView performSelectorOnMainThread:@selector(evaluateJavaScript:completionHandler:) withObject:JSString waitUntilDone:NO];
+            }
         }
     }
 }
@@ -72,7 +76,7 @@
     if (!_settings) {
         _settings = [self settingsFromConfigFile];
     }
-    
+
     return _settings;
 }
 
@@ -81,7 +85,7 @@
         _dateFormatter = [[NSDateFormatter alloc] init];
         _dateFormatter.dateFormat = @"YYYY-MM-dd'T'HH:mm:ss.SSSZ";
     }
-    
+
     return _dateFormatter;
 }
 
@@ -97,14 +101,14 @@
         __block BOOL registerForPush = [command.arguments[0] boolValue];
 
         NSString *appKey = self.settings[@"carnival_ios_app_key"];
-    
+
         [self.commandDelegate runInBackground:^{
             [Carnival startEngine:appKey registerForPushNotifications:registerForPush ignoreAutoAnalyticsSources:@[CarnivalAutoAnalyticsSourceAll]];
-        
+
             [CarnivalMessageStream setDelegate:self];
-        
+
             [self sendPluginResultWithStatus:CDVCommandStatus_OK forCommand:command];
-        }];    
+        }];
     }
 }
 
@@ -120,7 +124,7 @@
 
 - (void)setTags:(CDVInvokedUrlCommand *)command {
     NSArray *newTags = command.arguments;
-    
+
     [self.commandDelegate runInBackground:^{
         [Carnival setTagsInBackground:newTags withResponse:^(NSArray *tags, NSError *error) {
             [self sendPluginResultWithPossibleError:error array:tags forCommand:command];
@@ -132,31 +136,31 @@
 
 - (void)showMessageStream:(CDVInvokedUrlCommand *)command {
     CustomBarButtonItem *closeItem = [CustomBarButtonItem closeButtonForTarget:self action:@selector(closeButtonPressed:)];
-    
+
     // Change the color of the close button on the message stream
     [closeItem setTintColor:[UIColor blackColor]];
-    
+
     CarnivalStreamViewController *streamVC = [[CarnivalStreamViewController alloc] init];
     [streamVC.navigationItem setRightBarButtonItem:closeItem];
-    
+
     UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:streamVC];
-    
+
     // Change the color of the navigation bar
     [navVC.navigationBar setBackgroundColor:[UIColor whiteColor]];
     [navVC.navigationBar setBarTintColor:[UIColor whiteColor]];
-    
+
     // Change the font and color of the nav bar text
     [navVC.navigationBar setTitleTextAttributes:@{
         NSFontAttributeName : [UIFont fontWithName:@"AvenirNext-Regular" size:15.0f],
         NSForegroundColorAttributeName : [UIColor blackColor]
     }];
-    
+
     self.streamNavigationController = navVC;
-    
+
     [[self presentingViewController] presentViewController:navVC animated:YES completion:^{
         // Change the status bar foreground color, Note: you'll need to turn UIViewController-based status bar appearance off in your info.plist
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-        
+
         [self sendPluginResultWithStatus:CDVCommandStatus_OK forCommand:command];
     }];
 }
@@ -166,7 +170,7 @@
 - (void)logEvent:(CDVInvokedUrlCommand *)command {
     if ([command.arguments count] > 0) {
         NSString *eventName = command.arguments[0];
-    
+
         if (eventName && [eventName isKindOfClass:[NSString class]]) {
             [Carnival logEvent:eventName];
         }
@@ -185,11 +189,11 @@
 
 - (void)updateLocation:(CDVInvokedUrlCommand *)command {
     NSArray *arguments = command.arguments;
-    
+
     if ([arguments count] > 1) {
         double lat = [command.arguments[0] doubleValue];
         double lon = [command.arguments[1] doubleValue];
-        
+
         [self.commandDelegate runInBackground:^{
             CLLocation *location = [[CLLocation alloc] initWithLatitude:lat longitude:lon];
             [Carnival updateLocation:location];
@@ -201,11 +205,11 @@
 
 - (void)setString:(CDVInvokedUrlCommand *)command {
     NSArray *arguments = command.arguments;
-    
+
     if ([arguments count] > 1) {
         NSString *string = arguments[0];
         NSString *key = arguments[1];
-        
+
         if ([string isKindOfClass:[NSString class]] && [key isKindOfClass:[NSString class]]) {
             [self.commandDelegate runInBackground:^{
                 [Carnival setString:string forKey:key withResponse:^(NSError *error) {
@@ -218,11 +222,11 @@
 
 - (void)setFloat:(CDVInvokedUrlCommand *)command {
     NSArray *arguments = command.arguments;
-    
+
     if ([arguments count] > 1) {
         CGFloat aFloat = [arguments[0] floatValue];
         NSString *key = arguments[1];
-        
+
         if ([key isKindOfClass:[NSString class]]) {
             [self.commandDelegate runInBackground:^{
                 [Carnival setFloat:aFloat forKey:key withResponse:^(NSError *error) {
@@ -235,11 +239,11 @@
 
 - (void)setInteger:(CDVInvokedUrlCommand *)command {
     NSArray *arguments = command.arguments;
-    
+
     if ([arguments count] > 1) {
         NSInteger anInteger = [arguments[0] integerValue];
         NSString *key = arguments[1];
-        
+
         if ([key isKindOfClass:[NSString class]]) {
             [self.commandDelegate runInBackground:^{
                 [Carnival setInteger:anInteger forKey:key withResponse:^(NSError *error) {
@@ -252,14 +256,14 @@
 
 - (void)setDate:(CDVInvokedUrlCommand *)command {
     NSArray *arguments = command.arguments;
-    
+
     if ([arguments count] > 1) {
         NSString *dateString = arguments[0];
         NSString *key = arguments[1];
-        
+
         if ([dateString isKindOfClass:[NSString class]] && [key isKindOfClass:[NSString class]]) {
             NSDate *date = [self.dateFormatter dateFromString:dateString];
-            
+
             if (date) {
                 [self.commandDelegate runInBackground:^{
                     [Carnival setDate:date forKey:key withResponse:^(NSError *error) {
@@ -273,11 +277,11 @@
 
 - (void)setBool:(CDVInvokedUrlCommand *)command {
     NSArray *arguments = command.arguments;
-    
+
     if ([arguments count] > 1) {
         BOOL aBool = [arguments[0] boolValue];
         NSString *key = arguments[1];
-        
+
         if ([key isKindOfClass:[NSString class]]) {
             [self.commandDelegate runInBackground:^{
                 [Carnival setBool:aBool forKey:key withResponse:^(NSError *error) {
@@ -290,10 +294,10 @@
 
 - (void)removeAttribute:(CDVInvokedUrlCommand *)command {
     NSArray *arguments = command.arguments;
-    
+
     if ([arguments count] > 0) {
         NSString *key = arguments[0];
-        
+
         if ([key isKindOfClass:[NSString class]]) {
             [self.commandDelegate runInBackground:^{
                 [Carnival removeAttributeWithKey:key withResponse:^(NSError *error) {
@@ -340,7 +344,7 @@
 
             if (message) {
                 [CarnivalMessageStream removeMessage:message withResponse:^(NSError *error){
-                    [self sendPluginResultWithPossibleError:error forCommand:command]; 
+                    [self sendPluginResultWithPossibleError:error forCommand:command];
                 }];
             }
         }
@@ -431,7 +435,7 @@
                 CarnivalMessage *message = [[CarnivalMessage alloc] initWithDictionary:messageDict];
 
                 if (message) {
-                    [messages addObject:message];   
+                    [messages addObject:message];
                 }
             }
         }
@@ -460,7 +464,7 @@
                 [Carnival setUserId:userID withResponse:^(NSError *error) {
                     [self sendPluginResultWithPossibleError:error forCommand:command];
                 }];
-            }];       
+            }];
         }
     }
 }
@@ -497,25 +501,25 @@
 
 - (void)sendPluginResultWithPossibleError:(NSError *)error andInt:(int)anInt forCommand:(CDVInvokedUrlCommand *)command {
     CDVPluginResult *result = [self pluginResultWithPossibleError:error andInt:anInt];
-    
+
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
 }
 
 - (void)sendPluginResultWithPossibleError:(NSError *)error array:(NSArray *)array forCommand:(CDVInvokedUrlCommand *)command {
     CDVPluginResult *result = [self pluginResultWithPossibleError:error array:array];
-    
+
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
 }
 
 - (void)sendPluginResultWithPossibleError:(NSError *)error string:(NSString *)string forCommand:(CDVInvokedUrlCommand *)command {
     CDVPluginResult *result = [self pluginResultWithPossibleError:error string:string];
-    
+
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
 }
 
 - (void)sendPluginResultWithPossibleError:(NSError *)error forCommand:(CDVInvokedUrlCommand *)command {
     CDVPluginResult *result = [self pluginResultWithPossibleError:error];
-    
+
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
 }
 
@@ -545,11 +549,11 @@
 
 - (UIViewController *)presentingViewController {
     UIViewController *presentingViewController = [self hostAppMainWindow].rootViewController;
-    
+
     while (presentingViewController.presentedViewController) {
         presentingViewController = presentingViewController.presentedViewController;
     }
-    
+
     return presentingViewController;
 }
 
@@ -559,24 +563,24 @@
 
 - (NSDictionary *)settingsFromConfigFile {
     CDVConfigParser *parserDelegate = [[CDVConfigParser alloc] init];
-    
+
     NSString *path = [[NSBundle mainBundle] pathForResource:@"config" ofType:@"xml"];
-    
+
     if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
         return nil;
     }
-    
+
     NSURL *url = [NSURL fileURLWithPath:path];
-    
+
     NSXMLParser *configParser = [[NSXMLParser alloc] initWithContentsOfURL:url];
-    
+
     if (configParser == nil) {
         return nil;
     }
-    
+
     [configParser setDelegate:parserDelegate];
     [configParser parse];
-    
+
     return parserDelegate.settings;
 }
 
