@@ -5,5 +5,5 @@ repositories {
 }
 
 dependencies {
-    compile 'com.carnival.sdk:carnival:2.14.+'
+    compile 'com.carnival.sdk:carnival:3.0.+'
 }

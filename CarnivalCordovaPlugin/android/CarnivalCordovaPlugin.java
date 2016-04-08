@@ -38,7 +38,6 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
 	private static final String ACTION_START_ENGINE = "startEngine";
 	private static final String ACTION_GET_TAGS = "getTags";
 	private static final String ACTION_SET_TAGS = "setTags";
-	private static final String ACTION_SHOW_MESSAGE_STREAM = "showMessageStream";
 	private static final String ACTION_UPDATE_LOCATION = "updateLocation";
 	private static final String ACTION_LOG_EVENT = "logEvent";
 	private static final String ACTION_SET_STRING = "setString";
@@ -92,9 +91,7 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
 				}
 			});
 		} else if (ACTION_SET_TAGS.equals(action)) {
-				setTags(args, callbackContext);	
-		} else if (ACTION_SHOW_MESSAGE_STREAM.equals(action)) {
-			showMessageStream();
+			setTags(args, callbackContext);	
 		} else if (ACTION_UPDATE_LOCATION.equals(action)) {
 			updateLocation(args.getJSONArray(0));
 		} else if (ACTION_LOG_EVENT.equals(action)) {

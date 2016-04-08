@@ -9,7 +9,6 @@
 #import "CarnivalCordovaPlugin.h"
 #import <Carnival/Carnival.h>
 #import <Cordova/CDVConfigParser.h>
-#import "CustomBarButtonItem.h"
 
 @interface CarnivalMessage ()
 
@@ -129,39 +128,6 @@
         [Carnival setTagsInBackground:newTags withResponse:^(NSArray *tags, NSError *error) {
             [self sendPluginResultWithPossibleError:error array:tags forCommand:command];
         }];
-    }];
-}
-
-#pragma mark - stream
-
-- (void)showMessageStream:(CDVInvokedUrlCommand *)command {
-    CustomBarButtonItem *closeItem = [CustomBarButtonItem closeButtonForTarget:self action:@selector(closeButtonPressed:)];
-
-    // Change the color of the close button on the message stream
-    [closeItem setTintColor:[UIColor blackColor]];
-
-    CarnivalStreamViewController *streamVC = [[CarnivalStreamViewController alloc] init];
-    [streamVC.navigationItem setRightBarButtonItem:closeItem];
-
-    UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:streamVC];
-
-    // Change the color of the navigation bar
-    [navVC.navigationBar setBackgroundColor:[UIColor whiteColor]];
-    [navVC.navigationBar setBarTintColor:[UIColor whiteColor]];
-
-    // Change the font and color of the nav bar text
-    [navVC.navigationBar setTitleTextAttributes:@{
-        NSFontAttributeName : [UIFont fontWithName:@"AvenirNext-Regular" size:15.0f],
-        NSForegroundColorAttributeName : [UIColor blackColor]
-    }];
-
-    self.streamNavigationController = navVC;
-
-    [[self presentingViewController] presentViewController:navVC animated:YES completion:^{
-        // Change the status bar foreground color, Note: you'll need to turn UIViewController-based status bar appearance off in your info.plist
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-
-        [self sendPluginResultWithStatus:CDVCommandStatus_OK forCommand:command];
     }];
 }
 
@@ -459,11 +425,17 @@
     if (arguments.count > 0) {
         NSString *userID = arguments[0];
 
-        if ([userID isKindOfClass:[NSString class]]) {
+        if ([userID isKindOfClass:[NSString class]] || [userID isKindOfClass:[NSNull class]]) {
             [self.commandDelegate runInBackground:^{
-                [Carnival setUserId:userID withResponse:^(NSError *error) {
-                    [self sendPluginResultWithPossibleError:error forCommand:command];
-                }];
+                if ([userID isKindOfClass:[NSNull class]]) {
+                    [Carnival setUserId:nil withResponse:^(NSError *error) {
+                        [self sendPluginResultWithPossibleError:error forCommand:command];
+                    }];
+                } else {
+                    [Carnival setUserId:userID withResponse:^(NSError *error) {
+                        [self sendPluginResultWithPossibleError:error forCommand:command];
+                    }];
+                }
             }];
         }
     }

@@ -12,9 +12,8 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import "CarnivalMessageStream.h"
-#import "CarnivalStreamViewController.h"
 
-#define CARNIVAL_VERSION @"3.8.2"
+#define CARNIVAL_VERSION @"4.0.0"
 
 /* Constants for Auto-Analytics Tracking */
 NS_ASSUME_NONNULL_BEGIN
@@ -26,22 +25,6 @@ extern NSString * const CarnivalAutoAnalyticsSourceFlurryAnalytics;
 extern NSString * const CarnivalAutoAnalyticsSourceAmplitude;
 extern NSString * const CarnivalAutoAnalyticsSourceAll;
 NS_ASSUME_NONNULL_END
-
-__attribute__((deprecated))
-@protocol CarnivalIdentifierDataSource <NSObject>
-
-@required
-
-/**
- *  Override this method and return the user's unique identifier for Carnival.
- *
- *  @return The user's unique identifier for Carnival.
- *
- *  @warning This method is deprecated. Please use setUserId: instead.
- */
-- (nullable NSString *)carnivalUniqueIdentifier __attribute__((deprecated));
-
-@end
 
 @interface Carnival : NSObject
 
@@ -55,32 +38,32 @@ __attribute__((deprecated))
  *  Make sure your app bundle identifier is the same as whatever it is set to on http://app.carnivalmobile.com .
  *
  *  @warning It is important that this method is called at the earliest possible opportunity (e.g. application:didFinishLaunchingWithOptions:),
- *  calling it later in the app lifecycle can have unintended consequences.
+ *  calling it later in the app lifecycle can have unintended consequences. No startEngine: calls (overrides included) must not be called more than once.
  */
 + (void)startEngine:(nonnull NSString *)appKey;
 
 /**
- *  Sets the Carnival appKey credentials for this app, and the UIRemoteNotificationType at the same time.
+ *  Sets the Carnival appKey credentials for this app, and the UIUserNotificationType at the same time.
  *
  *  @param appKey The appKey you recieved when setting up your app at http://app.carnivalmobile.com .
- *  @param types The UIRemoteNotificationType attributes you wish to register this app for as defined in UIApplication.h
- *  see appledocs for more information.
+ *  @param types The UIUserNotificationType attributes you wish to register this app for as defined in UIApplication.h
+ *  see appledocs for more information. If targeting, iOS 7 users, please use UIUserNotificationType anyway.
  *  @discussion An exception will be raised if you do not set your appKey before you call any other methods.
  *  Make sure your app bundle identifier is the same as whatever it is on http://app.carnivalmobile.com .
  *
  *  @warning It is important that this method is called at the earliest possible opportunity (e.g. application:didFinishLaunchingWithOptions:),
- *  calling it later in the app lifecycle can have unintended consequences.
+ *  calling it later in the app lifecycle can have unintended consequences. No startEngine: calls (overrides included) must not be called more than once.
  */
-+ (void)startEngine:(nonnull NSString *)appKey andNotificationTypes:(UIRemoteNotificationType)types;
++ (void)startEngine:(nonnull NSString *)appKey andNotificationTypes:(UIUserNotificationType)types;
 
 /**
- *  Sets the Carnival appKey credentials for this app and optionally registers for push notifications with the badge, alert and sound UIRemoteNotificationType's
+ *  Sets the Carnival appKey credentials for this app and optionally registers for push notifications with the badge, alert and sound UIUserNotificationType's
  *
  *  @param appKey The appKey you recieved when setting up your app at http://app.carnivalmobile.com .
  *  @param registerForPushNotifications when this parameter is YES the Carnival iOS SDK will automatically register for push notifications
  *
  *  @warning It is important that this method is called at the earliest possible opportunity (e.g. application:didFinishLaunchingWithOptions:),
- *  calling it later in the app lifecycle can have unintended consequences.
+ *  calling it later in the app lifecycle can have unintended consequences. No startEngine: calls (overrides included) must not be called more than once.
  */
 + (void)startEngine:(nonnull NSString *)appKey registerForPushNotifications:(BOOL)registerForPushNotifications;
 
@@ -93,29 +76,29 @@ __attribute__((deprecated))
  *  @param ignoreArray An array of string constants of the Auto-Analytics sources to ignore. By default, all sources will be observed.
  *
  *  @warning It is important that this method is called at the earliest possible opportunity (e.g. application:didFinishLaunchingWithOptions:),
- *  calling it later in the app lifecycle can have unintended consequences.
+ *  calling it later in the app lifecycle can have unintended consequences. No startEngine: calls (overrides included) must not be called more than once.
  */
 + (void)startEngine:(nonnull NSString *)appKey ignoreAutoAnalyticsSources:(nonnull NSArray *)ignoreArray;
 
 /**
- *  Sets the Carnival appKey credentials for this app, the UIRemoteNotificationTypes and ignores certain analytics sources.
+ *  Sets the Carnival appKey credentials for this app, the UIUserNotificationTypes and ignores certain analytics sources.
  *  Carnival Auto-Analytics Tracking will track 3rd party analytics being logged and log them to Carnival as well. Right now, only Events are supported.
  *  This is enababled by default for your convinience. If you wish to opt out, you can provide an array of sources to ignore.
  *
  *  @param appKey The appKey you recieved when setting up your app at http://app.carnivalmobile.com .
- *  @param types The UIRemoteNotificationType attributes you wish to register this app for as defined in UIApplication.h
+ *  @param types The UIUserNotificationType attributes you wish to register this app for as defined in UIApplication.h
  *  see appledocs for more information.
  *  @param ignoreArray An array of string constants of the Auto-Analytics sources to ignore. By default, all sources will be observed.
  *  @discussion An exception will be raised if you do not set your appKey before you call any other methods.
  *  Make sure your app bundle identifier is the same as whatever it is on http://app.carnivalmobile.com .
  *
  *  @warning It is important that this method is called at the earliest possible opportunity (e.g. application:didFinishLaunchingWithOptions:),
- *  calling it later in the app lifecycle can have unintended consequences.
+ *  calling it later in the app lifecycle can have unintended consequences. No startEngine: calls (overrides included) must not be called more than once.
  */
-+ (void)startEngine:(nonnull NSString *)appKey andNotificationTypes:(UIRemoteNotificationType)types ignoreAutoAnalyticsSources:(nonnull NSArray *)ignoreArray;
++ (void)startEngine:(nonnull NSString *)appKey andNotificationTypes:(UIUserNotificationType)types ignoreAutoAnalyticsSources:(nonnull NSArray *)ignoreArray;
 
 /**
- *  Sets the Carnival appKey credentials for this app, optionally registers for push notifications with the badge, alert and sound UIRemoteNotificationType's and ignores certain analytics sources.
+ *  Sets the Carnival appKey credentials for this app, optionally registers for push notifications with the badge, alert and sound UIUserNotificationType's and ignores certain analytics sources.
  *  Carnival Auto-Analytics Tracking will track 3rd party analytics being logged and log them to Carnival as well. Right now, only Events are supported.
  *  This is enababled by default for your convinience. If you wish to opt out, you can provide an array of sources to ignore.
  *
@@ -123,7 +106,7 @@ __attribute__((deprecated))
  *  @param registerForPushNotifications when this parameter is YES the Carnival iOS SDK will automatically register for push notifications
  *  @param ignoreArray An array of string constants of the Auto-Analytics sources to ignore. By default, all sources will be observed.
  *  @warning It is important that this method is called at the earliest possible opportunity (e.g. application:didFinishLaunchingWithOptions:),
- *  calling it later in the app lifecycle can have unintended consequences.
+ *  calling it later in the app lifecycle can have unintended consequences. No startEngine: calls (overrides included) must not be called more than once.
  */
 + (void)startEngine:(nonnull NSString *)appKey registerForPushNotifications:(BOOL)registerForPushNotifications ignoreAutoAnalyticsSources:(nonnull NSArray *)ignoreArray;
 
@@ -211,7 +194,7 @@ __attribute__((deprecated))
  *  @param string The string value to be set.
  *  @param key The string value of the key.
  *  @param block The block returned from the asyncronous call possibly containing an error.
-**/
+ **/
 + (void)setString:(nonnull NSString *)string forKey:(nonnull NSString *)key withResponse:(nullable void(^)(NSError *__nullable error))block;
 
 /**
@@ -230,7 +213,7 @@ __attribute__((deprecated))
  *  @param key The string value of the key.
  *  @param block The block returned from the asyncronous call possibly containing an error.
  **/
-+ (void)setStrings:(nonnull NSArray *)array forKey:(nonnull NSString *)key withResponse:(nullable void(^)(NSError *__nullable error))block;
++ (void)setStrings:(nonnull NSArray<NSString *> *)array forKey:(nonnull NSString *)key withResponse:(nullable void(^)(NSError *__nullable error))block;
 
 /**
  *  Syncronously sets an array of string for a given key.
@@ -239,7 +222,7 @@ __attribute__((deprecated))
  *  @param key The string value of the key.
  *  @param error A pointer to an error which will be non-nil if there is an error.
  **/
-+ (void)setStrings:(nonnull NSArray *)array forKey:(nonnull NSString *)key error:(NSError  *__nullable *__nullable)error;
++ (void)setStrings:(nonnull NSArray<NSString *> *)array forKey:(nonnull NSString *)key error:(NSError  *__nullable *__nullable)error;
 
 /**
  *  Asyncronously sets a float value for a given key.
@@ -266,7 +249,7 @@ __attribute__((deprecated))
  *  @param key The string value of the key.
  *  @param block The block returned from the asyncronous call possibly containing an error.
  **/
-+ (void)setFloats:(nonnull NSArray *)array forKey:(nonnull NSString *)key withResponse:(nullable void(^)(NSError *__nullable error))block;
++ (void)setFloats:(nonnull NSArray<NSNumber *> *)array forKey:(nonnull NSString *)key withResponse:(nullable void(^)(NSError *__nullable error))block;
 
 /**
  *  Syncronously sets an array of NSNumbers (which are backed by floats) for a given key.
@@ -275,10 +258,10 @@ __attribute__((deprecated))
  *  @param key The string value of the key.
  *  @param error A pointer to an error which will be non-nil if there is an error.
  **/
-+ (void)setFloats:(nonnull NSArray *)array forKey:(nonnull NSString *)key error:(NSError  *__nullable *__nullable)error;
++ (void)setFloats:(nonnull NSArray<NSNumber *> *)array forKey:(nonnull NSString *)key error:(NSError  *__nullable *__nullable)error;
 
 /**
- *  Asyncronously sets an integer value for a given key.
+ *  Asyncronously sets an integer value for a given key. Only 32-bit Integers are supported.
  *
  *  @param integer The integer value to be set.
  *  @param key The string value of the key.
@@ -287,7 +270,7 @@ __attribute__((deprecated))
 + (void)setInteger:(NSInteger)integer forKey:(nonnull NSString *)key withResponse:(nullable void(^)(NSError *__nullable error))block;
 
 /**
- *  Syncronously sets an integer value for a given key.
+ *  Syncronously sets an integer value for a given key. Only 32-bit Integers are supported.
  *
  *  @param integer The integer value to be set.
  *  @param key The string value of the key.
@@ -296,22 +279,22 @@ __attribute__((deprecated))
 + (void)setInteger:(NSInteger)integer forKey:(nonnull NSString *)key error:(NSError  *__nullable *__nullable)error;
 
 /**
- *  Asyncronously sets an array of NSNumbers (which are backed by integers) for a given key.
+ *  Asyncronously sets an array of NSNumbers (which are backed by integers) for a given key. Only 32-bit Integers are supported.
  *
  *  @param array The array of NSNumbers, backed by integers, to be set.
  *  @param key The string value of the key.
  *  @param block The block returned from the asyncronous call possibly containing an error.
  **/
-+ (void)setIntegers:(nonnull NSArray *)array forKey:(nonnull NSString *)key withResponse:(nullable void(^)(NSError *__nullable error))block;
++ (void)setIntegers:(nonnull NSArray<NSNumber *> *)array forKey:(nonnull NSString *)key withResponse:(nullable void(^)(NSError *__nullable error))block;
 
 /**
- *  Syncronously sets an array of NSNumbers (which are backed by integers) for a given key.
+ *  Syncronously sets an array of NSNumbers (which are backed by integers) for a given key. Only 32-bit Integers are supported.
  *
  *  @param array The array of NSNumbers, backed by integers, to be set.
  *  @param key The string value of the key.
  *  @param error A pointer to an error which will be non-nil if there is an error.
  **/
-+ (void)setIntegers:(nonnull NSArray *)array forKey:(nonnull NSString *)key error:(NSError  *__nullable *__nullable)error;
++ (void)setIntegers:(nonnull NSArray<NSNumber *> *)array forKey:(nonnull NSString *)key error:(NSError  *__nullable *__nullable)error;
 
 /**
  *  Asyncronously sets a date value for a given key.
@@ -338,7 +321,7 @@ __attribute__((deprecated))
  *  @param key The string value of the key.
  *  @param block The block returned from the asyncronous call possibly containing an error.
  **/
-+ (void)setDates:(nonnull NSArray *)array forKey:(nonnull NSString *)key withResponse:(nullable void(^)(NSError *__nullable error))block;
++ (void)setDates:(nonnull NSArray<NSDate *> *)array forKey:(nonnull NSString *)key withResponse:(nullable void(^)(NSError *__nullable error))block;
 
 /**
  *  Syncronously sets an array of date values for a given key.
@@ -347,7 +330,7 @@ __attribute__((deprecated))
  *  @param key The string value of the key.
  *  @param error A pointer to an error which will be non-nil if there is an error.
  **/
-+ (void)setDates:(nonnull NSArray *)array forKey:(nonnull NSString *)key error:(NSError  *__nullable *__nullable)error;
++ (void)setDates:(nonnull NSArray<NSDate *> *)array forKey:(nonnull NSString *)key error:(NSError  *__nullable *__nullable)error;
 
 /**
  *  Asyncronously sets a boolean value for a given key.
@@ -416,15 +399,6 @@ __attribute__((deprecated))
  */
 + (void)handleNotification:(nonnull NSDictionary *)notificationDict;
 
-/** @name Identifier */
-
-/**
- *  Sets the Identifier dataSource which gives the Carnival SDK identifier information
- *
- *  @param dataSource An object that conforms to the CarnivalIdentifierDataSource protocol
- */
-+ (void)setIdentifierDataSource:(nonnull id<CarnivalIdentifierDataSource>)dataSource __attribute__((deprecated));
-
 /** @name Device details */
 
 /**
@@ -470,5 +444,14 @@ __attribute__((deprecated))
  *  @param disabled A boolean value indicating whether or not to disable location based on IP Address.
  */
 + (void)setGeoIPTrackingEnabled:(BOOL)enabled;
+
+/**
+ *  Enable crash tracking for recording sessions which end in a crash.
+ *  Warning: This is for advance uses where in some cases, crash handlers from Test Flight or Fabric (Crashlytics) interrupt Carnival crash detection.
+ *  If you are not experiencing these issues, do not use this method. 
+ *
+ *  @param disabled A boolean value indicating whether or not to install the crash handlers. Defaults to YES.
+ */
++ (void)setCrashHandlersEnabled:(BOOL)enabled;
 
 @end

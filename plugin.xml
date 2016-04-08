@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin id="com.carnivalmobile.carnivalcordovaplugin" version="1.7.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+<plugin id="com.carnivalmobile.carnivalcordovaplugin" version="2.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
 	<engines>
 		<engine name="cordova" version=">=3.4.0"/>
 	</engines>
@@ -78,11 +78,6 @@
 
 		<header-file src="CarnivalCordovaPlugin/iOS/CarnivalCordovaPlugin.h"/>
 		<source-file src="CarnivalCordovaPlugin/iOS/CarnivalCordovaPlugin.m"/>
-		<header-file src="CarnivalCordovaPlugin/iOS/CustomBarButtonItem.h"/>
-		<source-file src="CarnivalCordovaPlugin/iOS/CustomBarButtonItem.m"/>
-
-		<resource-file src="CarnivalCordovaPlugin/iOS/cp_close_button@2x.png" />
-
 		<framework src="CoreLocation.framework" />
 		<framework src="CoreGraphics.framework" />
 		<framework src="QuartzCore.framework" />

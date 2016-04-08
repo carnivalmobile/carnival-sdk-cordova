@@ -17,9 +17,6 @@
 - (void)getTags:(CDVInvokedUrlCommand *)command;
 - (void)setTags:(CDVInvokedUrlCommand *)command;
 
-// Stream
-- (void)showMessageStream:(CDVInvokedUrlCommand *)command;
-
 // Location
 -(void)updateLocation:(CDVInvokedUrlCommand *)command;
 
