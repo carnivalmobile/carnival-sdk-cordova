@@ -29,7 +29,6 @@ import android.support.v4.content.LocalBroadcastManager;
 import com.carnival.sdk.Carnival;
 import com.carnival.sdk.CarnivalImpressionType;
 import com.carnival.sdk.Carnival.TagsHandler;
-import com.carnival.sdk.CarnivalStreamActivity;
 import com.carnival.sdk.MessageActivity;
 import com.carnival.sdk.Message;
 
