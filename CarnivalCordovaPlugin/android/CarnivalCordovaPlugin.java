@@ -142,14 +142,12 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
 		String packageName = activity.getPackageName();
 		int xmlId = activity.getResources().getIdentifier("config", "xml", packageName);
 		XmlResourceParser parser = activity.getResources().getXml(xmlId);
-		
 		String carnivalAppKey = "";
-		String carnivalProjectNumber = "";
 		
 		try {
 			int eventType = parser.getEventType();
 			
-			while (eventType != XmlPullParser.END_DOCUMENT && (TextUtils.isEmpty(carnivalAppKey) || TextUtils.isEmpty(carnivalProjectNumber))) {
+			while (eventType != XmlPullParser.END_DOCUMENT && TextUtils.isEmpty(carnivalAppKey)) {
 				
 				if(eventType == XmlPullParser.START_TAG) {
 					if ("preference".equals(parser.getName())) {
@@ -166,8 +164,6 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
 
 						if ("carnival_android_app_key".equals(attNameValue)) {
 							carnivalAppKey = attValue;
-						} else if ("carnival_android_project_number".equals(attNameValue)) {
-							carnivalProjectNumber = attValue;
 						}
 					}
 
@@ -188,7 +184,7 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
         if (id != 0) {
             Carnival.setNotificationIcon(id);
         }
-		Carnival.startEngine(this.cordova.getActivity(), carnivalProjectNumber, carnivalAppKey);
+		Carnival.startEngine(this.cordova.getActivity(), carnivalAppKey);
 
 		setup();
 	}
@@ -218,26 +214,12 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
             }
         });
 	}
-	
-	/**
-	 * 
-	 */
-	private void showMessageStream() {
-
-		this.cordova.getThreadPool().execute (new Runnable() {
-			public void run() {
-				Activity activity = CarnivalCordovaPlugin.this.cordova.getActivity();
-				Intent i = new Intent(activity, CarnivalStreamActivity.class);
-				activity.startActivity(i);
-			}
-		});
-	}
 
 	private void getDeviceId(final CallbackContext callbackContext) {
 		Carnival.getDeviceId(new Carnival.CarnivalHandler<String>() {
             @Override
             public void onSuccess(String value) {
-                callbackContext.success(Carnival.getDeviceId());
+                callbackContext.success(value);
             }
 
             @Override
