@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin id="com.carnivalmobile.carnivalcordovaplugin" version="2.0.2" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+<plugin id="com.carnivalmobile.carnivalcordovaplugin" version="2.0.3" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
 	<engines>
 		<engine name="cordova" version=">=3.4.0"/>
 	</engines>
@@ -33,30 +33,19 @@
                 android:protectionLevel="signature" />
 		</config-file>
 		<config-file target="AndroidManifest.xml" parent="/manifest/application">
-    		<activity android:name="com.carnival.sdk.CarnivalStreamActivity" />
-	        <activity android:name="com.carnival.sdk.MessageActivity" />
+  
+	        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
 
 	        <receiver
-	            android:name="com.carnival.sdk.GcmBroadcastReceiver"
-	            android:permission="com.google.android.c2dm.permission.SEND" >
-	            <intent-filter>
-	                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-	                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
 
-	                <category android:name="${applicationId}" />
-	            </intent-filter>
-	        </receiver>
-
-	        <service android:name="com.carnival.sdk.GcmIntentService" />
-
-	        <activity android:name="com.carnival.sdk.DummyActivity" />
-	        <activity
-	            android:name="com.carnival.sdk.FakePhoneCallActivity"
-	            android:screenOrientation="portrait"
-	            android:configChanges="orientation|keyboardHidden|screenSize">
-
-	        </activity>
-	        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+                <category android:name="${applicationId}" />
+            </intent-filter>
+        </receiver>
 	        
 		</config-file>
 

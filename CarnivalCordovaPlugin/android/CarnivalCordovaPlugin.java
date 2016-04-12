@@ -126,7 +126,7 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
 		}else if (ACTION_MARK_READ.equals(action)) {
 			markMessagesAsRead(args, callbackContext);
 		} else if (ACTION_SET_USER_ID.equals(action)) {
-			setUserId(args.getJSONArray(0), callbackContext);
+			setUserId(args, callbackContext);
 		} else {
 			return false;
 		}
@@ -300,7 +300,6 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
 
 	private void setUserId(JSONArray args, final CallbackContext callbackContext) throws JSONException {
 		String value = args.getString(0);
-		
 		Carnival.setUserId(value, new Carnival.CarnivalHandler<Void>() {
             @Override
             public void onSuccess(Void value) {
