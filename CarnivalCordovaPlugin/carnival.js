@@ -85,7 +85,7 @@ Carnival.prototype.markMessageAsRead = function(onSuccess, onFailure, message) {
 };
 
 Carnival.prototype.markMessagesAsRead = function(onSuccess, onFailure, messages) {
-    cordova.exec(onSuccess, onFailure, "CarnivalCordovaPlugin", "markMessageAsRead", messages);
+    cordova.exec(onSuccess, onFailure, "CarnivalCordovaPlugin", "markMessagesAsRead", messages);
 };
 
 // Present/dismiss message detail
