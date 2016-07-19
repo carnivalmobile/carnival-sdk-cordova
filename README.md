@@ -22,13 +22,14 @@ e.g.
 
 ### Android
 
-Add these preferences to your `config.xml` file with your Carnival App key (from [http://app.carnivalmobile.com](http://app.carnivalmobile.com)).
+Add these preferences to your `config.xml` file with your Carnival App key (from [http://app.carnivalmobile.com](http://app.carnivalmobile.com)) and your Project Number as described in the [Android](http://docs.carnival.io/v1.0/docs/enable-push-notifications-for-android) push documentation.
 
 e.g.
 
 ```xml
 <platform name="android">
     <preference name="carnival_android_app_key" value="YOUR_APP_KEY_GOES_HERE"/>
+    <preference name="carnival_android_project_number" value="YOUR_PROJECT_NUMBER_GOES_HERE"/>
 </platform>
 ```
 
