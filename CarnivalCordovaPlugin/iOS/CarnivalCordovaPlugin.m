@@ -2,13 +2,14 @@
 //  CarnivalPhonegapPlugin.m
 //  CarnivalPhonegapPlugin
 //
-//  Created by Blair McArthur on 28/10/14.
+//  Created by Carnival.io
 //
 //
 
 #import "CarnivalCordovaPlugin.h"
 #import <Carnival/Carnival.h>
 #import <Cordova/CDVConfigParser.h>
+#import <WebKit/WebKit.h>
 
 @interface CarnivalMessage ()
 
@@ -57,13 +58,15 @@
                                      "  document.dispatchEvent(event);";
 
             NSString *JSString = [NSString stringWithFormat:formatString, [unreadCount integerValue]];
-
             if ([self.webView respondsToSelector:@selector(stringByEvaluatingJavaScriptFromString:)]) {
                 // Cordova-iOS pre-4
                 [self.webView performSelectorOnMainThread:@selector(stringByEvaluatingJavaScriptFromString:) withObject:JSString waitUntilDone:NO];
             } else {
                 // Cordova-iOS 4+
-                [self.webView performSelectorOnMainThread:@selector(evaluateJavaScript:completionHandler:) withObject:JSString waitUntilDone:NO];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    WKWebView *webView = (WKWebView *)self.webView;
+                    [webView evaluateJavaScript:JSString completionHandler:NULL];
+                });
             }
         }
     }
@@ -100,14 +103,14 @@
         __block BOOL registerForPush = [command.arguments[0] boolValue];
 
         NSString *appKey = self.settings[@"carnival_ios_app_key"];
-
         [self.commandDelegate runInBackground:^{
-            [Carnival startEngine:appKey registerForPushNotifications:registerForPush ignoreAutoAnalyticsSources:@[CarnivalAutoAnalyticsSourceAll]];
+
+            [Carnival startEngine:appKey registerForPushNotifications:registerForPush];
 
             [CarnivalMessageStream setDelegate:self];
 
             [self sendPluginResultWithStatus:CDVCommandStatus_OK forCommand:command];
-        }];
+       }];
     }
 }
 

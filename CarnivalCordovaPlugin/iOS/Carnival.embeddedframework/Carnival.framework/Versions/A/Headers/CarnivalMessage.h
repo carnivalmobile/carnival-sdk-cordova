@@ -41,6 +41,11 @@ typedef NS_ENUM(NSInteger, CarnivalMessageType) {
 @property (nonatomic, strong, nullable) NSString *text;
 
 /**
+ * The body text of the message rendered into HTML.
+ */
+@property (nonatomic, strong, nullable) NSString *htmlText;
+
+/**
  * The title of the message.
  */
 @property (nonatomic, strong, nonnull) NSString *title;
@@ -75,5 +80,11 @@ typedef NS_ENUM(NSInteger, CarnivalMessageType) {
  * A dictionary of arbitary attributes set on the message.
  */
 @property (nonatomic, strong, nullable) NSDictionary *attributes;
+
+
+/**
+ * Whether or not a message had a push attached.
+ */
+@property (nonatomic, assign, readonly, getter=hasPushAttached) BOOL pushAttached;
 
 @end
