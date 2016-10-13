@@ -66,6 +66,10 @@ Carnival.prototype.setUserId = function(onSuccess, onFailure, userId) {
     cordova.exec(onSuccess, onFailure, "CarnivalCordovaPlugin", "setUserId", [userId]);
 };
 
+Carnival.prototype.setUserEmail = function(onSuccess, onFailure, userEmail) {
+    cordova.exec(onSuccess, onFailure, "CarnivalCordovaPlugin", "setUserEmail", [userEmail]);
+};
+
 // Messages
 Carnival.prototype.messages = function(onSuccess, onFailure) {
     cordova.exec(onSuccess, onFailure, "CarnivalCordovaPlugin", "messages", []);

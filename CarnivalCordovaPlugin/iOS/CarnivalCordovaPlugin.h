@@ -40,6 +40,7 @@
 
 // Users
 - (void)setUserId:(CDVInvokedUrlCommand *)command;
+- (void)setUserEmail:(CDVInvokedUrlCommand *)command;
 
 // Messages
 - (void)messages:(CDVInvokedUrlCommand *)command;

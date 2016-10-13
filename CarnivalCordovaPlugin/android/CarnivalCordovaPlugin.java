@@ -55,7 +55,8 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
 	private static final String ACTION_REMOVE_MESSAGE = "removeMessage";
 	private static final String ACTION_MARK_READ = "markMessageAsRead";
 	private static final String ACTION_SET_USER_ID = "setUserId";
-	
+	private static final String ACTION_SET_USER_EMAIL = "setUserEmail";
+
 	private final BroadcastReceiver unreadCountReceiver = new BroadcastReceiver() {
 			@Override
 			public void onReceive(Context context, Intent intent) {
@@ -127,6 +128,8 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
 			markMessagesAsRead(args, callbackContext);
 		} else if (ACTION_SET_USER_ID.equals(action)) {
 			setUserId(args, callbackContext);
+		} else if (ACTION_SET_USER_EMAIL.equals(action)) {
+			setUserEmail(args, callbackContext);
 		} else {
 			return false;
 		}
@@ -181,9 +184,9 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
 		parser.close();
 
 		int id = activity.getResources().getIdentifier("ic_stat_notification", "drawable", activity.getPackageName());
-        if (id != 0) {
-            Carnival.setNotificationIcon(id);
-        }
+				if (id != 0) {
+						Carnival.setNotificationIcon(id);
+				}
 		Carnival.startEngine(this.cordova.getActivity(), carnivalAppKey);
 
 		setup();
@@ -203,30 +206,30 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
 		}
 		
 		Carnival.setTagsWithResponse(list, new Carnival.TagsHandler() {
-            @Override
-            public void onSuccess(List<String> list) {
-                callbackContext.success(new JSONArray(list));
-            }
+						@Override
+						public void onSuccess(List<String> list) {
+								callbackContext.success(new JSONArray(list));
+						}
 
-            @Override
-            public void onFailure(Error error) {
-            	callbackContext.error(error.getLocalizedMessage());
-            }
-        });
+						@Override
+						public void onFailure(Error error) {
+							callbackContext.error(error.getLocalizedMessage());
+						}
+				});
 	}
 
 	private void getDeviceId(final CallbackContext callbackContext) {
 		Carnival.getDeviceId(new Carnival.CarnivalHandler<String>() {
-            @Override
-            public void onSuccess(String value) {
-                callbackContext.success(value);
-            }
+						@Override
+						public void onSuccess(String value) {
+								callbackContext.success(value);
+						}
 
-            @Override
-            public void onFailure(Error error) {
-            	callbackContext.error(error.getLocalizedMessage());
-            }
-        });
+						@Override
+						public void onFailure(Error error) {
+							callbackContext.error(error.getLocalizedMessage());
+						}
+				});
 	}
 
 	private void updateLocation(JSONArray args) throws JSONException {
@@ -301,16 +304,31 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
 	private void setUserId(JSONArray args, final CallbackContext callbackContext) throws JSONException {
 		String value = args.getString(0);
 		Carnival.setUserId(value, new Carnival.CarnivalHandler<Void>() {
-            @Override
-            public void onSuccess(Void value) {
-                callbackContext.success(new JSONArray());
-            }
+						@Override
+						public void onSuccess(Void value) {
+								callbackContext.success(new JSONArray());
+						}
 
-            @Override
-            public void onFailure(Error error) {
-            	callbackContext.error(error.getLocalizedMessage());
-            }
-        });
+						@Override
+						public void onFailure(Error error) {
+							callbackContext.error(error.getLocalizedMessage());
+						}
+				});
+	}
+
+	private void setUserEmail(JSONArray args, final CallbackContext callbackContext) throws JSONException {
+		String value = args.getString(0);
+		Carnival.setUserEmail(value, new Carnival.CarnivalHandler<Void>() {
+						@Override
+						public void onSuccess(Void value) {
+								callbackContext.success(new JSONArray());
+						}
+
+						@Override
+						public void onFailure(Error error) {
+							callbackContext.error(error.getLocalizedMessage());
+						}
+				});
 	}
 
 	private void getMessages(final CallbackContext callbackContext) {
@@ -409,16 +427,16 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
 			}
 		}
 		Carnival.setMessagesRead(messages, new Carnival.MessagesReadHandler() {
-            @Override
-            public void onSuccess() {
-                callbackContext.success();
-            }
+						@Override
+						public void onSuccess() {
+								callbackContext.success();
+						}
 
-            @Override
-            public void onFailure(Error error) {
-            	callbackContext.error(error.getLocalizedMessage());
-            }
-        });
+						@Override
+						public void onFailure(Error error) {
+							callbackContext.error(error.getLocalizedMessage());
+						}
+				});
 	}
 
 }

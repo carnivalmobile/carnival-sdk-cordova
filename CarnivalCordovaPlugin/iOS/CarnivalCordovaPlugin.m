@@ -444,6 +444,27 @@
     }
 }
 
+- (void)setUserEmail:(CDVInvokedUrlCommand *)command {
+    NSArray *arguments = command.arguments;
+
+    if (arguments.count > 0) {
+        NSString *userEmail = arguments[0];
+
+        if ([userEmail isKindOfClass:[NSString class]] || [userEmail isKindOfClass:[NSNull class]]) {
+            [self.commandDelegate runInBackground:^{
+                if ([userEmail isKindOfClass:[NSNull class]]) {
+                    [Carnival setUserEmail:nil withResponse:^(NSError *error) {
+                        [self sendPluginResultWithPossibleError:error forCommand:command];
+                    }];
+                } else {
+                    [Carnival setUserEmail:userEmail withResponse:^(NSError *error) {
+                        [self sendPluginResultWithPossibleError:error forCommand:command];
+                    }];
+                }
+            }];
+        }
+    }
+}
 #pragma mark - deviceID
 
 - (void)deviceID:(CDVInvokedUrlCommand *)command {
