@@ -18,7 +18,10 @@
 - (void)setTags:(CDVInvokedUrlCommand *)command;
 
 // Location
--(void)updateLocation:(CDVInvokedUrlCommand *)command;
+- (void)updateLocation:(CDVInvokedUrlCommand *)command;
+
+// Clear Device Data
+- (void)clearDevice:(CDVInvokedUrlCommand *)command;
 
 // Custom Attributes
 - (void)setString:(CDVInvokedUrlCommand *)command;
@@ -26,6 +29,7 @@
 - (void)setInteger:(CDVInvokedUrlCommand *)command;
 - (void)setDate:(CDVInvokedUrlCommand *)command;
 - (void)setBool:(CDVInvokedUrlCommand *)command;
+- (void)setAttributes:(CDVInvokedUrlCommand *)command;
 - (void)removeAttribute:(CDVInvokedUrlCommand *)command;
 
 // UnreadCount

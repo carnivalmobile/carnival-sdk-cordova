@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
+import java.util.Iterator;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
@@ -26,6 +27,7 @@ import android.util.Log;
 import android.location.Location;
 import android.support.v4.content.LocalBroadcastManager;
 
+import com.carnival.sdk.AttributeMap;
 import com.carnival.sdk.Carnival;
 import com.carnival.sdk.CarnivalImpressionType;
 import com.carnival.sdk.Carnival.TagsHandler;
@@ -56,6 +58,8 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
 	private static final String ACTION_MARK_READ = "markMessageAsRead";
 	private static final String ACTION_SET_USER_ID = "setUserId";
 	private static final String ACTION_SET_USER_EMAIL = "setUserEmail";
+	private static final String ACTION_SET_ATTRIBUTES = "setAttributes";
+	private static final String ACTION_CLEAR_DEVICE = "clearDevice";
 
 	private final BroadcastReceiver unreadCountReceiver = new BroadcastReceiver() {
 			@Override
@@ -74,24 +78,24 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
 
 	@Override
 	public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
-		
+
 		if (ACTION_START_ENGINE.equals(action)) {
 			startEngine();
 		} else if (ACTION_GET_TAGS.equals(action)) {
 			Carnival.getTags(new TagsHandler() {
-				
+
 				@Override
 				public void onSuccess(List<String> arg0) {
 					callbackContext.success(new JSONArray(arg0));
 				}
-				
+
 				@Override
 				public void onFailure(Error arg0) {
 					callbackContext.error(arg0.getLocalizedMessage());
 				}
 			});
 		} else if (ACTION_SET_TAGS.equals(action)) {
-			setTags(args, callbackContext);	
+			setTags(args, callbackContext);
 		} else if (ACTION_UPDATE_LOCATION.equals(action)) {
 			updateLocation(args.getJSONArray(0));
 		} else if (ACTION_LOG_EVENT.equals(action)) {
@@ -130,15 +134,19 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
 			setUserId(args, callbackContext);
 		} else if (ACTION_SET_USER_EMAIL.equals(action)) {
 			setUserEmail(args, callbackContext);
+		} else if (ACTION_SET_ATTRIBUTES.equals(action)) {
+			setAttributes(args.getJSONObject(0), callbackContext);
+		} else if (ACTION_CLEAR_DEVICE.equals(action)) {
+			clearDevice(args.getInt(0), callbackContext);
 		} else {
 			return false;
 		}
-		
+
 		return true;
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	private void startEngine() {
 		Activity activity = this.cordova.getActivity();
@@ -146,12 +154,12 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
 		int xmlId = activity.getResources().getIdentifier("config", "xml", packageName);
 		XmlResourceParser parser = activity.getResources().getXml(xmlId);
 		String carnivalAppKey = "";
-		
+
 		try {
 			int eventType = parser.getEventType();
-			
+
 			while (eventType != XmlPullParser.END_DOCUMENT && TextUtils.isEmpty(carnivalAppKey)) {
-				
+
 				if(eventType == XmlPullParser.START_TAG) {
 					if ("preference".equals(parser.getName())) {
 						String attNameValue = "";
@@ -191,7 +199,7 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
 
 		setup();
 	}
-	
+
 	/**
 	 * @param args JSON array containing a number of string elements: ["EXAMPLE_SET_TAG_1","EXAMPLE_SET_TAG_2"]
 	 * @throws JSONException
@@ -199,12 +207,12 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
 	private void setTags(JSONArray args, final CallbackContext callbackContext) throws JSONException {
 
 		JSONArray jsonTags = args;
-		
+
 		List<String> list = new ArrayList<String>();
 		for (int i=0; i<jsonTags.length(); i++) {
 			list.add( jsonTags.getString(i) );
 		}
-		
+
 		Carnival.setTagsWithResponse(list, new Carnival.TagsHandler() {
 						@Override
 						public void onSuccess(List<String> list) {
@@ -286,6 +294,103 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
 		Date value = new Date(args.getInt(0));
 
 		Carnival.setAttribute(key, value);
+	}
+
+	private void clearDevice(final int clearValues, final CallbackContext callbackContext) throws JSONException {
+		Carnival.clearDevice(clearValues, new Carnival.CarnivalHandler<Void>() {
+      		@Override
+      		public void onSuccess(Void aVoid) {
+        		callbackContext.success(new JSONArray());
+	      	}
+
+		  	@Override
+		  	public void onFailure(Error error) {
+				error.printStackTrace();
+			  	String msg = String.format("clearValues: %d, Message: %s", clearValues, error.getMessage());
+				callbackContext.error(msg);
+		  	}
+		});
+	}
+
+	private void setAttributes(JSONObject attributeMap, final CallbackContext callbackContext) throws JSONException {
+		JSONObject attributes = attributeMap.getJSONObject("attributes");
+		AttributeMap carnivalAttributeMap = new AttributeMap();
+		carnivalAttributeMap.setMergeRules(attributeMap.getInt("mergeRule"));
+
+		Iterator<String> keys = attributes.keys();
+
+		while (keys.hasNext()) {
+			String key = keys.next();
+			JSONObject attribute = attributes.getJSONObject(key);
+			String attributeType = attribute.getString("type");
+			if (attributeType.equals("string")) {
+				carnivalAttributeMap.putString(key, attribute.getString("value"));
+
+			} else if (attributeType.equals("stringArray")) {
+				ArrayList<String> array = new ArrayList<String>();
+				JSONArray values = attribute.getJSONArray("value");
+				for (int i = 0; i < values.length(); i++) {
+					array.add((String)values.get(i));
+				}
+
+				carnivalAttributeMap.putStringArray(key, array);
+
+			} else if (attributeType.equals("integer")) {
+				carnivalAttributeMap.putInt(key, attribute.getInt("value"));
+
+			} else if (attributeType.equals("integerArray")) {
+				ArrayList<Integer> array = new ArrayList<Integer>();
+				JSONArray values = attribute.getJSONArray("value");
+				for (int i = 0; i < values.length(); i++) {
+					array.add((Integer)values.get(i));
+				}
+
+				carnivalAttributeMap.putIntArray(key, array);
+
+			} else if (attributeType.equals("boolean")) {
+				carnivalAttributeMap.putBoolean(key, attribute.getBoolean("value"));
+
+			} else if (attributeType.equals("float")) {
+				carnivalAttributeMap.putFloat(key, (float)attribute.getDouble("value"));
+
+			} else if (attributeType.equals("floatArray")) {
+				ArrayList<Float> array = new ArrayList<Float>();
+				JSONArray values = attribute.getJSONArray("value");
+				for (int i = 0; i < values.length(); i++) {
+					Float value = Float.parseFloat(values.get(i).toString());
+					array.add(value);
+				}
+
+				carnivalAttributeMap.putFloatArray(key, array);
+
+			} else if (attributeType.equals("date")) {
+				Date value = new Date(attribute.getLong("value"));
+				carnivalAttributeMap.putDate(key, value);
+
+			} else if (attributeType.equals("dateArray")) {
+				ArrayList<Date> array = new ArrayList<Date>();
+				JSONArray values = attribute.getJSONArray("value");
+				for (int i = 0; i < values.length(); i++) {
+					Long dateValue = Long.parseLong(values.get(i).toString());
+					Date value = new Date(dateValue);
+					array.add(value);
+				}
+
+				carnivalAttributeMap.putDateArray(key, array);
+			}
+		}
+
+		Carnival.setAttributes(carnivalAttributeMap, new Carnival.AttributesHandler() {
+			@Override
+			public void onSuccess() {
+				callbackContext.success(new JSONArray());
+			}
+
+			@Override
+			public void onFailure(Error error) {
+				callbackContext.error(error.getLocalizedMessage());
+			}
+		});
 	}
 
 	private void removeAttribute(JSONArray args) throws JSONException {

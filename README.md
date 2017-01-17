@@ -45,10 +45,10 @@ Users of PhoneGap Build are not able to set a notification icon.
 #### PhoneGap Build
 To use Carnival with PhoneGap Build (PGB) there a few additional steps to take.
 
-1. Change the ID on the pluign to something unique to your project, as this has to remain unique within the PhoneGap plugin repo. 
-2. Add `<preference name="android-build-tool" value="gradle" />` to your App's config.xml such that PBG will use Gradle to build and manage dependencies on Android. 
+1. Change the ID on the pluign to something unique to your project, as this has to remain unique within the PhoneGap plugin repo.
+2. Add `<preference name="android-build-tool" value="gradle" />` to your App's config.xml such that PBG will use Gradle to build and manage dependencies on Android.
 
-PGB can be tricky, so feel free to [contact us](support@carnival.io) if you need assistance here. We are happy to help. 
+PGB can be tricky, so feel free to [contact us](support@carnival.io) if you need assistance here. We are happy to help.
 
 Note: We're not using NPM because of the inability to distribute .framework files with NPM such that they'll work in PBG. We hope this will be resolved soon.
 
@@ -58,7 +58,7 @@ Note: We're not using NPM because of the inability to distribute .framework file
 Carnival.startEngine(true);
 ```
 Sets the Carnival appKey credentials for this app. This method uses the value of the `carnival_ios_app_key` in your config.xml file. On iOS, if true, the device will register for push notifications and prompt the user. If you wish to delay this prompt, such as with an onboarding scenario, then pass in false and call `Carnival.registerForPushNotifications()` at a later point.
- 
+
  ```js
 Carnival.getTags(
   function callback(data) {
@@ -99,7 +99,45 @@ Carnival.logEvent("event_name");
 ```
 Logs a custom event with the given name.
 
+#### Attributes
+
+Use `Carnival.AttributeMap` to set one or more attributes.
+
 ```js
+
+var attributeMap = new Carnival.AttributeMap();
+
+// String
+attributeMap.setString('teststringkey', 'test string');
+
+// Array of strings
+attributeMap.setStringArray(
+    'teststringarraykey', [
+    'test string 1',
+    'test string 2',
+]);
+
+// Float
+attributeMap.setFloat('testfloatkey', 1.23);
+
+// Array of floats
+attributeMap.setFloatArray('testfloatarraykey', [1.23, 42.3]);
+
+// Integer
+attributeMap.setInteger('testintegerkey', 7777);
+
+// Array of integers
+attributeMap.setIntegerArray('testintegerarraykey', [7777, 1337]);
+
+// Date. You can use JavaScript's native Date object
+attributeMap.setDate('testdatekey', new Date());
+
+// Array of dates
+attributeMap.setDateArray('testdatearraykey', [new Date(), new Date()]);
+
+// Boolean values
+attributeMap.setBoolean('testboolkey', true);
+
 Carnival.setString(
   function callback() {
     console.log('setString successfully returned');
@@ -110,64 +148,16 @@ Carnival.setString(
   "test_string",
   "test_string_key"
 );
-```
-Sets a string custom attribute for the given key
 
-```js
-Carnival.setFloat(
+Carnival.setAttributes(
   function callback() {
-    console.log('setFloat successfully returned');
+    console.log('setAttributes successfully returned');
   },
   function errorHandler(err) {
-    console.log('setFloat returned error: ' + err);
+    console.log('setAttributes returned error: ' + err);
   },
-  1.23,
-  "test_float_key"
+  attributeMap
 );
-```
-Sets a float custom attribute for the given key
-
-```js
-Carnival.setInteger(
-  function callback() {
-    console.log('setFloat successfully returned');
-  },
-  function errorHandler(err) {
-    console.log('setFloat returned error: ' + err);
-  },
-  1,
-  "test_integer_key"
-);
-```
-Sets a integer custom attribute for the given key
-
-```js
-Carnival.setDate(
-  function callback() {
-    console.log('setDate successfully returned');
-  },
-  function errorHandler(err) {
-    console.log('setDate returned error: ' + err);
-  },
-  new Date(),
-  "test_date_key"
-);
-```
-Sets a date custom attribute for the given key
-
-```js
-Carnival.setBool(
-  function callback() {
-    console.log('setBool successfully returned');
-  },
-  function errorHandler(err) {
-    console.log('setBool returned error: ' + err);
-  },
-  true,
-  "test_bool_key"
-);
-```
-Sets a boolean custom attribute for the given key
 
 ```js
 Carnival.removeAttribute(
@@ -308,4 +298,4 @@ Gets the current device's deviceID.
 ```js
 Carnival.registerForPushNotifications();
 ```
-Registers for push notifications, prompting the user on iOS to allow notifications. For use when you pass `false` to startEngine. 
+Registers for push notifications, prompting the user on iOS to allow notifications. For use when you pass `false` to startEngine.
