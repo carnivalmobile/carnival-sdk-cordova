@@ -55,7 +55,7 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
 	private static final String ACTION_IN_APP_ENABLED = "setInAppNotificationsEnabled";
 	private static final String ACTION_REGISTER_IMPRESSION = "registerImpression";
 	private static final String ACTION_REMOVE_MESSAGE = "removeMessage";
-	private static final String ACTION_MARK_READ = "markMessageAsRead";
+	private static final String ACTION_MARK_READ = "markMessagesAsRead";
 	private static final String ACTION_SET_USER_ID = "setUserId";
 	private static final String ACTION_SET_USER_EMAIL = "setUserEmail";
 	private static final String ACTION_SET_ATTRIBUTES = "setAttributes";
