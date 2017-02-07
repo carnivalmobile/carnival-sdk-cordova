@@ -299,3 +299,10 @@ Gets the current device's deviceID.
 Carnival.registerForPushNotifications();
 ```
 Registers for push notifications, prompting the user on iOS to allow notifications. For use when you pass `false` to startEngine.
+
+### Support
+
+If you have a support query relating to this repo please contact us via one of the following methods:
+
+**email:** support@sailthru.com  
+**portal:** https://sailthru.zendesk.com/hc/en-us/requests/new
