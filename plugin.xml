@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin id="com.carnivalmobile.carnivalcordovaplugin" version="3.0.2" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
-	<engines>
-		<engine name="cordova" version=">=3.4.0"/>
-	</engines>
-	<name>CarnivalCordovaPlugin</name>
+<plugin id="com.carnivalmobile.carnivalcordovaplugin" version="4.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+	<name>carnival-cordova-plugin</name>
 	<description>Carnival SDK for Cordova-based Applications</description>
 
 	<license>Please refer to our privacy policy and terms of service at http://carnival.io</license>
@@ -11,13 +8,14 @@
 	<platform name="android">
 
 		<framework src="CarnivalCordovaPlugin/android/carnival.gradle" custom="true" type="gradleReference" />
-
+		<hook type="after_plugin_add" src="scripts/manifest_add.js" />
+		<hook type="after_plugin_rm" src="scripts/manifest_remove.js" />
 		<js-module src="CarnivalCordovaPlugin/carnival.js" name="Carnival">
 			<clobbers target="Carnival" />
 		</js-module>
 
 		<source-file src="CarnivalCordovaPlugin/android/CarnivalCordovaPlugin.java" target-dir="src/com/carnivalmobile/carnivalcordovaplugin" />
-
+		<source-file src="CarnivalCordovaPlugin/android/CarnivalApplication.java" target-dir="src/com/carnivalmobile/carnivalcordovaplugin" />
 		<config-file target="res/xml/config.xml" parent="/widget">
 			<feature name="CarnivalCordovaPlugin">
 				<param name="android-package" value="com.carnivalmobile.carnivalcordovaplugin.CarnivalCordovaPlugin"/>
@@ -62,19 +60,10 @@
 			</feature>
 		</config-file>
 
-		<framework src="CarnivalCordovaPlugin/iOS/Carnival.embeddedframework/Carnival.framework" custom="true" />
-		<resource-file src="CarnivalCordovaPlugin/iOS/Carnival.embeddedframework/Resources/CarnivalResources.bundle" />
+		<framework src="Carnival" type="podspec" spec="6.1.0" />
 
 		<header-file src="CarnivalCordovaPlugin/iOS/CarnivalCordovaPlugin.h"/>
 		<source-file src="CarnivalCordovaPlugin/iOS/CarnivalCordovaPlugin.m"/>
-		<framework src="CoreLocation.framework" />
-		<framework src="CoreGraphics.framework" />
-		<framework src="QuartzCore.framework" />
-		<framework src="libz.dylib" />
-		<framework src="MediaPlayer.framework" />
-		<framework src="AVFoundation.framework" />
-		<framework src="Security.framework" />
-		<framework src="WebKit.framework" />
 	</platform>
 
 	<info>
