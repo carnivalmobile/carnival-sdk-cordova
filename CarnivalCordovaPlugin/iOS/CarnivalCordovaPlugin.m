@@ -23,6 +23,9 @@
 @property (strong, nonatomic) NSDictionary *settings;
 @property (strong, nonatomic) UINavigationController *streamNavigationController;
 @property (strong, nonatomic) NSDateFormatter *dateFormatter;
+@property (strong, nonatomic) CDVInvokedUrlCommand *onInAppNotificationDisplayListenerCommand;
+@property (strong, nonatomic) CDVInvokedUrlCommand *onMessageDetailDisplayListenerCommand;
+@property (nonatomic) BOOL displayInAppNotifications;
 
 @end
 
@@ -31,6 +34,7 @@
 #pragma mark - setup
 
 - (void)setup {
+    _displayInAppNotifications = YES;
     [self addNotificationObservers];
 }
 
@@ -72,7 +76,44 @@
     }
 }
 
+# pragma mark - delegates
+- (BOOL)shouldPresentInAppNotificationForMessage:(CarnivalMessage *)message {
+    NSError *error;
+    NSString *formatString;
+    NSString *JSString;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[message dictionary] options:0 error:&error];
+
+    if (error) {
+        formatString = @"var event = new CustomEvent('inappnotification', {detail: {error: '%@'}});document.dispatchEvent(event);";
+        JSString = [NSString stringWithFormat:formatString, [error localizedDescription]];
+    } else {
+        formatString = @"var event = new CustomEvent('inappnotification', {detail: {message: %@}});document.dispatchEvent(event);";
+        NSString *json = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        JSString = [NSString stringWithFormat:formatString, json];
+    }
+
+    if ([self.webView respondsToSelector:@selector(stringByEvaluatingJavaScriptFromString:)]) {
+        // Cordova-iOS pre-4
+        [self.webView performSelectorOnMainThread:@selector(stringByEvaluatingJavaScriptFromString:) withObject:JSString waitUntilDone:NO];
+    } else {
+        // Cordova-iOS 4+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            WKWebView *webView = (WKWebView *)self.webView;
+            [webView evaluateJavaScript:JSString completionHandler:NULL];
+        });
+    }
+
+    return _displayInAppNotifications;
+}
+
 #pragma mark - overriden getters/setters
+
+- (void)setDisplayInAppNotifications:(CDVInvokedUrlCommand *)command {
+    if (command.arguments.count > 0) {
+        BOOL value = [command.arguments[0] boolValue];
+        _displayInAppNotifications = value;
+    }
+}
 
 - (NSDictionary *)settings {
     if (!_settings) {
@@ -106,32 +147,11 @@
         [self.commandDelegate runInBackground:^{
 
             [Carnival startEngine:appKey registerForPushNotifications:registerForPush];
-
             [CarnivalMessageStream setDelegate:self];
 
             [self sendPluginResultWithStatus:CDVCommandStatus_OK forCommand:command];
        }];
     }
-}
-
-#pragma mark - tags
-
-- (void)getTags:(CDVInvokedUrlCommand *)command {
-    [self.commandDelegate runInBackground:^{
-        [Carnival getTagsInBackgroundWithResponse:^(NSArray *tags, NSError *error) {
-            [self sendPluginResultWithPossibleError:error array:tags forCommand:command];
-        }];
-    }];
-}
-
-- (void)setTags:(CDVInvokedUrlCommand *)command {
-    NSArray *newTags = command.arguments;
-
-    [self.commandDelegate runInBackground:^{
-        [Carnival setTagsInBackground:newTags withResponse:^(NSArray *tags, NSError *error) {
-            [self sendPluginResultWithPossibleError:error array:tags forCommand:command];
-        }];
-    }];
 }
 
 #pragma mark - custom events
@@ -145,6 +165,16 @@
         }
     }
 }
+
+#pragma mark - customizing in-app notifications
+- (void)setOnInAppNotificationDisplayListener:(CDVInvokedUrlCommand *)command {
+    _onInAppNotificationDisplayListenerCommand = command;
+}
+
+- (void)setOnMessageDetailDisplayListener:(CDVInvokedUrlCommand *)command {
+    _onMessageDetailDisplayListenerCommand = command;
+}
+
 
 #pragma mark - pressed actions
 
@@ -189,95 +219,6 @@
 }
 
 #pragma mark - custom attributes
-
-- (void)setString:(CDVInvokedUrlCommand *)command {
-    NSArray *arguments = command.arguments;
-
-    if ([arguments count] > 1) {
-        NSString *string = arguments[0];
-        NSString *key = arguments[1];
-
-        if ([string isKindOfClass:[NSString class]] && [key isKindOfClass:[NSString class]]) {
-            [self.commandDelegate runInBackground:^{
-                [Carnival setString:string forKey:key withResponse:^(NSError *error) {
-                    [self sendPluginResultWithPossibleError:error forCommand:command];
-                }];
-            }];
-        }
-    }
-}
-
-- (void)setFloat:(CDVInvokedUrlCommand *)command {
-    NSArray *arguments = command.arguments;
-
-    if ([arguments count] > 1) {
-        CGFloat aFloat = [arguments[0] floatValue];
-        NSString *key = arguments[1];
-
-        if ([key isKindOfClass:[NSString class]]) {
-            [self.commandDelegate runInBackground:^{
-                [Carnival setFloat:aFloat forKey:key withResponse:^(NSError *error) {
-                    [self sendPluginResultWithPossibleError:error forCommand:command];
-                }];
-            }];
-        }
-    }
-}
-
-- (void)setInteger:(CDVInvokedUrlCommand *)command {
-    NSArray *arguments = command.arguments;
-
-    if ([arguments count] > 1) {
-        NSInteger anInteger = [arguments[0] integerValue];
-        NSString *key = arguments[1];
-
-        if ([key isKindOfClass:[NSString class]]) {
-            [self.commandDelegate runInBackground:^{
-                [Carnival setInteger:anInteger forKey:key withResponse:^(NSError *error) {
-                    [self sendPluginResultWithPossibleError:error forCommand:command];
-                }];
-            }];
-        }
-    }
-}
-
-- (void)setDate:(CDVInvokedUrlCommand *)command {
-    NSArray *arguments = command.arguments;
-
-    if ([arguments count] > 1) {
-        NSString *dateString = arguments[0];
-        NSString *key = arguments[1];
-
-        if ([dateString isKindOfClass:[NSString class]] && [key isKindOfClass:[NSString class]]) {
-            NSDate *date = [self.dateFormatter dateFromString:dateString];
-
-            if (date) {
-                [self.commandDelegate runInBackground:^{
-                    [Carnival setDate:date forKey:key withResponse:^(NSError *error) {
-                        [self sendPluginResultWithPossibleError:error forCommand:command];
-                    }];
-                }];
-            }
-        }
-    }
-}
-
-- (void)setBool:(CDVInvokedUrlCommand *)command {
-    NSArray *arguments = command.arguments;
-
-    if ([arguments count] > 1) {
-        BOOL aBool = [arguments[0] boolValue];
-        NSString *key = arguments[1];
-
-        if ([key isKindOfClass:[NSString class]]) {
-            [self.commandDelegate runInBackground:^{
-                [Carnival setBool:aBool forKey:key withResponse:^(NSError *error) {
-                    [self sendPluginResultWithPossibleError:error forCommand:command];
-                }];
-            }];
-        }
-    }
-}
 
 - (void)setAttributes:(CDVInvokedUrlCommand *)command {
     NSArray *arguments = command.arguments;
@@ -452,17 +393,6 @@
             [self sendPluginResultWithPossibleError:error andInt:unreadCount forCommand:command];
         }];
     }];
-}
-
-
-#pragma mark - disabling in-app notifications
-
-- (void)setInAppNotificationsEnabled:(CDVInvokedUrlCommand *)command {
-    if (command.arguments.count > 0) {
-        BOOL enabled = [command.arguments[0] boolValue];
-
-        [Carnival setInAppNotificationsEnabled:enabled];
-    }
 }
 
 #pragma mark - register impressions

@@ -16,7 +16,7 @@
     UIButton *closeButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 40.0f, 40.0f)];
     [closeButton setImage:[self blackCloseButtonImage] forState:UIControlStateNormal];
     [closeButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
-    
+
     return [[CustomBarButtonItem alloc] initWithCustomView:closeButton];
 }
 
@@ -24,7 +24,7 @@
 
 - (void)setTintColor:(UIColor *)tintColor {
     [super setTintColor:tintColor];
-    
+
     [self.customView setTintColor:tintColor];
 }
 

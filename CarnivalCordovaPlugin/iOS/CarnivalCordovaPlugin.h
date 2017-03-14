@@ -13,10 +13,6 @@
 // Initialize
 - (void)startEngine:(CDVInvokedUrlCommand *)command;
 
-// Tags
-- (void)getTags:(CDVInvokedUrlCommand *)command;
-- (void)setTags:(CDVInvokedUrlCommand *)command;
-
 // Location
 - (void)updateLocation:(CDVInvokedUrlCommand *)command;
 
@@ -24,19 +20,15 @@
 - (void)clearDevice:(CDVInvokedUrlCommand *)command;
 
 // Custom Attributes
-- (void)setString:(CDVInvokedUrlCommand *)command;
-- (void)setFloat:(CDVInvokedUrlCommand *)command;
-- (void)setInteger:(CDVInvokedUrlCommand *)command;
-- (void)setDate:(CDVInvokedUrlCommand *)command;
-- (void)setBool:(CDVInvokedUrlCommand *)command;
 - (void)setAttributes:(CDVInvokedUrlCommand *)command;
 - (void)removeAttribute:(CDVInvokedUrlCommand *)command;
 
 // UnreadCount
 - (void)unreadCount:(CDVInvokedUrlCommand *)command;
 
-// Enabling/disabling in-app notifications
-- (void)setInAppNotificationsEnabled:(CDVInvokedUrlCommand *)command;
+// Show/hide in-app notification standard UX
+- (void)setDisplayInAppNotifications:(CDVInvokedUrlCommand *)command;
+
 
 // Marking messages as read
 - (void)markMessageAsRead:(CDVInvokedUrlCommand *)command;
