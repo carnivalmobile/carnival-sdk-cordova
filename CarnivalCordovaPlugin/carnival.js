@@ -135,7 +135,7 @@
     }
   }
 
-  Carnival.prototype.MessageImpressionType = {StreamView: 2000, DetailView: 2001, InAppView: 2002};
+  Carnival.prototype.MessageImpressionType = {StreamView: 0, DetailView: 1, InAppView: 2};
   Carnival.prototype.DeviceValues = {Attributes: 1, MessageStream: 2, Events: 4, ClearAll: 7};
 
   // Initialization
