@@ -254,7 +254,8 @@
             [carnivalAttributeMap setIntegers:value forKey:key];
 
         } else if ([type isEqualToString:@"boolean"]) {
-            BOOL value = [[attributes valueForKey:key] valueForKey:@"value"];
+            NSNumber *dictionaryValue = [[attributes valueForKey:key] valueForKey:@"value"];
+            BOOL value = [dictionaryValue boolValue];
             [carnivalAttributeMap setBool:value forKey:key];
 
         } else if ([type isEqualToString:@"float"]) {
