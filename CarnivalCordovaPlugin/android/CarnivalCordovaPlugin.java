@@ -128,19 +128,45 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
             @Override
             public boolean shouldPresentInAppNotification(Message message) {
                 try {
-                    Method toJSON = Message.class.getDeclaredMethod("toJSON");
+                    Method toJSON = null;
+                    toJSON = Message.class.getDeclaredMethod("toJSON");
                     toJSON.setAccessible(true);
-                    JSONObject messageJSON = (JSONObject)toJSON.invoke(message);
-
+                    JSONObject messageJSON = null;
+                    messageJSON = (JSONObject)toJSON.invoke(message);
                     final String javascript = "javascript:var event = new CustomEvent('inappnotification', { detail : {message: %s }}); document.dispatchEvent(event);";
                     CarnivalCordovaPlugin.this.webView.loadUrl(String.format(javascript, messageJSON.toString()));
-                } catch (Exception e) {	}
-
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
                 return CarnivalCordovaPlugin.this.shouldDisplayInAppNotifications;
             }
         });
 
         Carnival.setInAppNotificationsEnabled(true);
+        setWrapperInfo();
+    }
+
+    private static void setWrapperInfo(){
+        Method setWrapperMethod = null;
+        try {
+            Class[] cArg = new Class[2];
+            cArg[0] = String.class;
+            cArg[1] = String.class;
+
+            setWrapperMethod = Carnival.class.getDeclaredMethod("setWrapper", cArg);
+            setWrapperMethod.setAccessible(true);
+            setWrapperMethod.invoke(null, "Cordova", "4.0.2");
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
 
     private void getDeviceId(final CallbackContext callbackContext) {
@@ -339,7 +365,11 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
                     }
 
                     callbackContext.success(messagesJson);
-                } catch (Exception e) {
+                } catch (NoSuchMethodException e) {
+                    callbackContext.error(e.getLocalizedMessage());
+                } catch (IllegalAccessException e) {
+                    callbackContext.error(e.getLocalizedMessage());
+                } catch (InvocationTargetException e) {
                     callbackContext.error(e.getLocalizedMessage());
                 }
             }
@@ -361,7 +391,13 @@ public class CarnivalCordovaPlugin extends CordovaPlugin {
             constructor = Message.class.getDeclaredConstructor(JSONObject.class);
             constructor.setAccessible(true);
             message = constructor.newInstance(messageJson);
-        } catch (Exception e) {
+        } catch (NoSuchMethodException e) {
+            callbackContext.error(e.getLocalizedMessage());
+        } catch (InstantiationException e) {
+            callbackContext.error(e.getLocalizedMessage());
+        } catch (IllegalAccessException e) {
+            callbackContext.error(e.getLocalizedMessage());
+        } catch (InvocationTargetException e) {
             callbackContext.error(e.getLocalizedMessage());
         }
 

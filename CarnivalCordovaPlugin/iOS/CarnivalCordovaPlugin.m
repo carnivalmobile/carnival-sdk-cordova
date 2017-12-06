@@ -18,6 +18,10 @@
 
 @end
 
+@interface Carnival ()
++ (void)setWrapperName:(NSString *)wrapperName andVersion:(NSString *)wrapperVersion;
+@end
+
 @interface CarnivalCordovaPlugin () <CarnivalMessageStreamDelegate>
 
 @property (strong, nonatomic) NSDictionary *settings;
@@ -25,7 +29,7 @@
 @property (strong, nonatomic) NSDateFormatter *dateFormatter;
 @property (strong, nonatomic) CDVInvokedUrlCommand *onInAppNotificationDisplayListenerCommand;
 @property (strong, nonatomic) CDVInvokedUrlCommand *onMessageDetailDisplayListenerCommand;
-@property (nonatomic) BOOL displayInAppNotifications;
+@property (strong, nonatomic) NSNumber *displayInAppNotifs;
 
 @end
 
@@ -34,7 +38,9 @@
 #pragma mark - setup
 
 - (void)setup {
-    _displayInAppNotifications = YES;
+    if(_displayInAppNotifs == nil) {
+        _displayInAppNotifs = [NSNumber numberWithBool:YES];
+    }
     [self addNotificationObservers];
 }
 
@@ -103,7 +109,7 @@
         });
     }
 
-    return _displayInAppNotifications;
+    return [_displayInAppNotifs boolValue];
 }
 
 #pragma mark - overriden getters/setters
@@ -111,7 +117,7 @@
 - (void)setDisplayInAppNotifications:(CDVInvokedUrlCommand *)command {
     if (command.arguments.count > 0) {
         BOOL value = [command.arguments[0] boolValue];
-        _displayInAppNotifications = value;
+        _displayInAppNotifs = [NSNumber numberWithBool:value];
     }
 }
 
@@ -148,6 +154,7 @@
 
             [Carnival startEngine:appKey registerForPushNotifications:registerForPush];
             [CarnivalMessageStream setDelegate:self];
+            [Carnival setWrapperName:@"Cordova" andVersion:@"4.0.2"];
 
             [self sendPluginResultWithStatus:CDVCommandStatus_OK forCommand:command];
        }];

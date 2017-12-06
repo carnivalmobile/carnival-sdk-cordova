@@ -18,7 +18,7 @@ e.g.
 </platform>
 ```
 
-(Optional) To be sure the iOS SDK is up to date; open your Xcode project, which should be located in the `platforms/ios` directory of your Cordova/Phonegap project and Drag and drop the `Carnival.embeddedframework` into it. The `Carnival.embeddedframework` can be downloaded from the [Carnival iOS SDK repo](https://github.com/carnivalmobile/carnival-ios-sdk/releases).
+(Optional) To be sure the iOS SDK is up to date; open your Xcode project, which should be located in the `platforms/ios` directory of your Cordova/Phonegap project and Drag and drop the `Carnival.framework` into it. The `Carnival.framework` can be downloaded from the [Carnival iOS SDK repo](https://github.com/carnivalmobile/carnival-ios-sdk/releases).
 
 ### Android
 
