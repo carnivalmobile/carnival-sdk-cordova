@@ -6,6 +6,11 @@ This repo contains cordova plugins for both iOS and Android as well as a demo ap
 
 `cordova plugin add https://github.com/carnivalmobile/carnival-sdk-cordova.git`
 
+> Note:
+Node version 8.12.0 will return an error if you attempt to add the SDK:
+`Failed to fetch plugin https://github.com/carnivalmobile/carnival-sdk-cordova.git via registry.`
+Please use Node version 8.11.4 to add the SDK, as we have confirmed it is working correctly. You can check your Node version using the `node --version` command.
+
 ### iOS
 
 Add a preference to your `config.xml` file with your Carnival App key (from [http://app.carnivalmobile.com](http://app.carnivalmobile.com)).
